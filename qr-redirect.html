@@ -91,7 +91,7 @@
       const authCta = document.getElementById('auth-cta');
 
       if (!session) {
-        subtitle.textContent = 'Session not found or already closed.';
+        subtitle.textContent = 'Please log in to continue. You must be logged in to sign or register.';
       } else {
         document.getElementById('course-name').textContent = session.courseName || session.courseCode || course || '-';
         document.getElementById('course-code').textContent = session.courseCode || course || '-';
