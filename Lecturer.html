@@ -9,9 +9,13 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <!-- Firebase SDK (App + Firestore) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/2.30.0/date-fns.min.js"></script>
+    <script src="js/modules/firebase.js"></script>
   </head>
   <body class="admin-dashboard">
     <div class="sidebar nav" id="sidebar">
@@ -54,12 +58,8 @@
           <button id="sidebar-toggle" class="toggle-btn" aria-label="Open Menu">
             <i class="fas fa-bars"></i>
           </button>
-          <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
-            <i class="fas fa-moon"></i>
-          </button>
-          <button onclick="document.body.classList.toggle('dark-mode')" style="background: red; color: white; padding: 5px; margin-left: 5px;">
-            TEST DARK
-          </button>
+
+
         </div>
         
 

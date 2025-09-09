@@ -141,6 +141,21 @@ class QRManager {
         
         // Save session
         this.saveSession(sessionData);
+        // Persist minimal session to Firebase (pin only, no QR payload)
+        if (window.FirebaseDB && window.FirebaseDB.init()) {
+            console.log('Attempting to save session to Firebase...');
+            window.FirebaseDB.saveCourseSession(sessionData).then((success) => {
+                if (success) {
+                    console.log('Session saved to Firebase successfully');
+                } else {
+                    console.error('Failed to save session to Firebase');
+                }
+            }).catch((error) => {
+                console.error('Error saving session to Firebase:', error);
+            });
+        } else {
+            console.warn('Firebase not available');
+        }
         
         // Show success message
         this.showNotification('QR Code generated successfully!', 'success');
@@ -380,6 +395,11 @@ class QRManager {
                     activeSession.sessionData.expiresAt = expiresAt.toISOString();
                 }
                 localStorage.setItem('courseSessions', JSON.stringify(courseSessions));
+
+                // Mirror expiration to Firebase
+                if (window.FirebaseDB && window.FirebaseDB.init()) {
+                    window.FirebaseDB.setExpiration(activeSession.sessionId || activeSession.id, expiresAt.toISOString());
+                }
             }
         } catch (error) {
             console.warn('Failed to update session expiration:', error);
@@ -427,6 +447,11 @@ class QRManager {
                 activeSession.status = 'closed';
                 activeSession.closedTime = new Date().toISOString();
                 localStorage.setItem('courseSessions', JSON.stringify(courseSessions));
+
+                // Mirror to Firebase
+                if (window.FirebaseDB && window.FirebaseDB.init()) {
+                    window.FirebaseDB.closeCourseSession(activeSession.sessionId || activeSession.id);
+                }
             }
         } catch (error) {
             console.warn('Failed to update course session status:', error);

@@ -18,6 +18,11 @@
       .field { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
       .field input { padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; }
       .info { background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px; border-radius: 8px; }
+      .loader { display: none; align-items: center; gap: 8px; margin-top: 12px; }
+      .loader.show { display: flex; }
+      .spinner { width: 16px; height: 16px; border: 2px solid #f3f3f3; border-top: 2px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite; }
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+      .btn-primary:disabled { background: #6c757d; cursor: not-allowed; }
     </style>
   </head>
   <body>
@@ -51,18 +56,33 @@
       <div id="sign-form" style="display:none; margin-top:16px;">
         <div class="field"><label>Student Name</label><input id="student-name" /></div>
         <div class="field"><label>Student ID</label><input id="student-id" /></div>
+        <div class="field"><label>Password</label><input id="student-pass" /></div>
         <div class="row" style="margin-top:8px;">
           <button class="btn-primary" id="sign-now">Sign Register</button>
           <button class="btn-secondary" id="cancel">Cancel</button>
+        </div>
+        <div class="loader" id="auth-loader">
+          <div class="spinner"></div>
+          <span>Authenticating student...</span>
         </div>
         <div id="sign-status" class="status"></div>
       </div>
     </div>
 
+    <!-- Firebase SDK (App + Firestore) for student verification -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/modules/firebase.js"></script>
     <script>
       function qs(param){ return new URLSearchParams(location.search).get(param) || '' }
-      function loadActiveSession(sessionId, pin){
+      async function loadActiveSession(sessionId, pin){
         try {
+          // Prefer Firebase lookup by pin (no QR stored, only pin)
+          if (window.FirebaseDB && window.FirebaseDB.init() && pin) {
+            const fromFb = await window.FirebaseDB.findActiveSessionByPin(pin);
+            if (fromFb) return fromFb;
+          }
+          // Fallback to localStorage
           const sessions = JSON.parse(localStorage.getItem('courseSessions') || '[]');
           let s = null;
           if (sessionId) s = sessions.find(x => (x.sessionId || x.id) === sessionId);
@@ -83,7 +103,50 @@
       const course = qs('course');
       const pin = qs('pin');
       const courseSessions = JSON.parse(localStorage.getItem('courseSessions') || '[]');
-      let session = loadActiveSession(sessionId, pin);
+      let session = null;
+      (async function resolveSession(){
+        session = await loadActiveSession(sessionId, pin);
+        if (!session) {
+          subtitle.textContent = 'Session not found or already closed.';
+        } else {
+          document.getElementById('course-name').textContent = session.courseName || session.courseCode || course || '-';
+          document.getElementById('course-code').textContent = session.courseCode || course || '-';
+          document.getElementById('session-id').textContent = session.sessionId || session.id;
+          document.getElementById('session-pin').textContent = session.pin || pin || '-';
+          document.getElementById('session-status').textContent = session.status;
+          document.getElementById('session-expires').textContent = formatExpiry(session.expiresAt || session.expiryTime);
+          subtitle.textContent = 'Confirm your details to sign the register.';
+          info.style.display = 'block';
+        }
+
+        const currentUserRaw = localStorage.getItem('currentUser');
+        let currentUser = null;
+        try { currentUser = currentUserRaw ? JSON.parse(currentUserRaw) : null; } catch {}
+
+        const fillFromUser = () => {
+          const n = document.getElementById('student-name');
+          const i = document.getElementById('student-id');
+          if (currentUser) {
+            n.value = currentUser.name || '';
+            i.value = currentUser.studentId || '';
+          }
+        };
+
+        const isStudent = currentUser && (currentUser.role === 'Student' || currentUser.role === 'student');
+        if (!isStudent) {
+          authCta.style.display = 'block';
+          document.getElementById('go-login').onclick = () => {
+            localStorage.setItem('postLoginRedirect', location.href);
+            location.href = 'index.html';
+          };
+          document.getElementById('go-student').onclick = () => {
+            location.href = 'Student.html';
+          };
+        } else if (session) {
+          signForm.style.display = 'block';
+          fillFromUser();
+        }
+      })();
 
       const subtitle = document.getElementById('session-subtitle');
       const info = document.getElementById('session-info');
@@ -134,11 +197,15 @@
 
       document.getElementById('cancel').onclick = () => { window.close() || (location.href = 'Student.html'); };
 
-      document.getElementById('sign-now').onclick = () => {
+      document.getElementById('sign-now').onclick = async () => {
         const name = document.getElementById('student-name').value.trim();
         const sid = document.getElementById('student-id').value.trim() || (currentUser && (currentUser.studentId || currentUser.id));
         const statusEl = document.getElementById('sign-status');
+        const loader = document.getElementById('auth-loader');
+        const signBtn = document.getElementById('sign-now');
+        
         statusEl.className = 'status';
+        statusEl.textContent = '';
 
         if (!session) { statusEl.textContent = 'No active session.'; statusEl.classList.add('error'); return; }
         if (!name || !sid) { statusEl.textContent = 'Name and Student ID required.'; statusEl.classList.add('error'); return; }
@@ -149,7 +216,13 @@
           statusEl.textContent = 'Session expired.'; statusEl.classList.add('error'); return;
         }
 
-        // Save to student's attendance records
+        // Show loader and disable button
+        loader.classList.add('show');
+        signBtn.disabled = true;
+        signBtn.textContent = 'Authenticating...';
+
+        try {
+          // Save to student's attendance records (local)
         const scans = JSON.parse(localStorage.getItem('studentScans') || '[]');
         const record = {
           id: 'scan_' + Date.now(),
@@ -177,11 +250,31 @@
           }
         } catch {}
 
-        statusEl.textContent = 'Attendance marked successfully!';
-        statusEl.classList.add('success');
+        // Save attendance to Firebase and increment
+        if (window.FirebaseDB && window.FirebaseDB.init()) {
+          await window.FirebaseDB.addAttendance(session.sessionId || session.id, record, true);
+        }
 
-        // Optional redirect back to Student dashboard after short delay
-        setTimeout(() => { location.href = 'Student.html'; }, 1200);
+          // Hide loader and re-enable button
+          loader.classList.remove('show');
+          signBtn.disabled = false;
+          signBtn.textContent = 'Sign Register';
+
+          statusEl.textContent = 'Attendance marked successfully!';
+          statusEl.classList.add('success');
+
+          // Optional redirect back to Student dashboard after short delay
+          setTimeout(() => { location.href = 'Student.html'; }, 1200);
+        } catch (error) {
+          // Hide loader and re-enable button on error
+          loader.classList.remove('show');
+          signBtn.disabled = false;
+          signBtn.textContent = 'Sign Register';
+          
+          statusEl.textContent = 'Error marking attendance. Please try again.';
+          statusEl.classList.add('error');
+          console.error('Error marking attendance:', error);
+        }
       };
     </script>
   </body>

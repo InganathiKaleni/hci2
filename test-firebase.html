@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Test</title>
+</head>
+<body>
+    <h1>Firebase Connection Test</h1>
+    <button onclick="testFirebase()">Test Firebase Connection</button>
+    <div id="result"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="js/modules/firebase.js"></script>
+
+    <script>
+        async function testFirebase() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing Firebase connection...';
+            
+            try {
+                // Test initialization
+                const initSuccess = window.FirebaseDB.init();
+                resultDiv.innerHTML += '<br>Firebase init: ' + (initSuccess ? 'SUCCESS' : 'FAILED');
+                
+                if (initSuccess) {
+                    // Test saving a simple document
+                    const testData = {
+                        sessionId: 'test_' + Date.now(),
+                        courseCode: 'TEST101',
+                        courseName: 'Test Course',
+                        pin: '123456',
+                        lecturerId: 'test_lecturer',
+                        lecturerName: 'Test Lecturer'
+                    };
+                    
+                    resultDiv.innerHTML += '<br>Attempting to save test session...';
+                    const saveSuccess = await window.FirebaseDB.saveCourseSession(testData);
+                    resultDiv.innerHTML += '<br>Save result: ' + (saveSuccess ? 'SUCCESS' : 'FAILED');
+                    
+                    if (saveSuccess) {
+                        // Test reading it back
+                        resultDiv.innerHTML += '<br>Attempting to find session by PIN...';
+                        const foundSession = await window.FirebaseDB.findActiveSessionByPin('123456');
+                        resultDiv.innerHTML += '<br>Find result: ' + (foundSession ? 'FOUND' : 'NOT FOUND');
+                        if (foundSession) {
+                            resultDiv.innerHTML += '<br>Session data: ' + JSON.stringify(foundSession, null, 2);
+                        }
+                    }
+                }
+            } catch (error) {
+                resultDiv.innerHTML += '<br>ERROR: ' + error.message;
+                console.error('Test error:', error);
+            }
+        }
+    </script>
+</body>
+</html>

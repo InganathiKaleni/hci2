@@ -9,6 +9,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://unpkg.com/docx@8.2.3/build/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+    <!-- Firebase SDK (App + Firestore) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/modules/firebase.js"></script>
     <style>
         .report-section {
             margin-bottom: 20px;
@@ -4572,17 +4576,36 @@
                 return { valid: true };
             }
 
-            function verifyPin(pin){
-                // Verify PIN against lecturer course sessions
+            async function verifyPin(pin){
+                // Verify PIN against Firestore first, then localStorage as fallback
                 try {
-                    const courseSessions = JSON.parse(localStorage.getItem('courseSessions') || '[]');
-                    const activeSession = courseSessions.find(s => s.pin === pin && s.status === 'active');
-                    
+                    let activeSession = null;
+                    if (window.FirebaseDB && window.FirebaseDB.init()) {
+                        const fbSession = await window.FirebaseDB.findActiveSessionByPin(pin);
+                        if (fbSession) {
+                            activeSession = {
+                                id: fbSession.sessionId || fbSession.id,
+                                courseCode: fbSession.courseCode,
+                                courseName: fbSession.courseName,
+                                lecturerId: fbSession.lecturerId,
+                                lecturerName: fbSession.lecturerName,
+                                expiresAt: fbSession.expiresAt,
+                                created: fbSession.createdAt,
+                                pin: fbSession.pin,
+                                status: fbSession.status
+                            };
+                        }
+                    }
+
+                    if (!activeSession) {
+                        const courseSessions = JSON.parse(localStorage.getItem('courseSessions') || '[]');
+                        activeSession = courseSessions.find(s => s.pin === pin && s.status === 'active');
+                    }
+
                     if (activeSession) {
-                        // Check if session has expired
+                        // Check expiry
                         let status = 'active';
                         let expiresText = 'No expiration set';
-                        
                         if (activeSession.expiresAt) {
                             const expiresAt = new Date(activeSession.expiresAt);
                             const now = new Date();
@@ -4595,7 +4618,7 @@
                                 expiresText = `${diffMins} minutes remaining`;
                             }
                         }
-                        
+
                         return {
                             valid: true,
                             data: {
@@ -4610,18 +4633,12 @@
                                 created: activeSession.created
                             }
                         };
-                    } else {
-                        return {
-                            valid: false,
-                            message: 'Invalid or expired PIN'
-                        };
                     }
+
+                    return { valid: false, message: 'Invalid or expired PIN' };
                 } catch (e) {
                     console.warn('Error verifying PIN:', e);
-                    return {
-                        valid: false,
-                        message: 'Error verifying PIN'
-                    };
+                    return { valid: false, message: 'Error verifying PIN' };
                 }
             }
 
@@ -4638,8 +4655,8 @@
                 pinStatus.classList.add('verifying');
                 
                 // Simulate verification delay
-                setTimeout(() => {
-                    const verification = verifyPin(pin);
+                setTimeout(async () => {
+                    const verification = await verifyPin(pin);
                     
                     if (verification.valid) {
                         displayPinResult(verification.data);
@@ -7619,6 +7636,15 @@
                 }
             });
             
+            // Close sidebar when any nav item inside it is clicked (small screens)
+            document.querySelectorAll('#sidebar2 .student-nav-item').forEach(function(navItem) {
+                navItem.addEventListener('click', function() {
+                    const sidebar = document.getElementById('sidebar2');
+                    sidebar.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+
             // Close sidebar on escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
