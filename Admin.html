@@ -6,6 +6,72 @@
     <title>Admin Dash Edu-Tend System</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+      /* Hide all sections by default */
+      .main-content .section {
+        display: none !important;
+      }
+      
+      /* Show dashboard by default */
+      .main-content #dashboard {
+        display: block !important;
+      }
+      
+      /* Show only the active section */
+      .main-content .section.active {
+        display: block !important;
+      }
+      
+      /* Override any conflicting styles */
+      .main-content .section[style*="display: none"] {
+        display: none !important;
+      }
+      
+      .main-content .section[style*="display: block"] {
+        display: block !important;
+      }
+      
+      /* Navigation item styling */
+      .lecturer-nav-item {
+        cursor: pointer !important;
+        transition: all 0.3s ease;
+        pointer-events: auto !important;
+        position: relative;
+        z-index: 10;
+        display: block !important;
+        text-decoration: none;
+        color: inherit;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+      }
+      
+      .lecturer-nav-item * {
+        pointer-events: none;
+      }
+      
+      .lecturer-nav-item:hover {
+        background: rgba(139, 92, 246, 0.1);
+        color: #ffffff;
+      }
+      
+      .lecturer-nav-item.active {
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(168, 85, 247, 0.2));
+        color: #ffffff;
+        border-left: 4px solid #8b5cf6;
+      }
+      
+      /* Ensure sidebar is clickable */
+      .sidebar {
+        pointer-events: auto;
+        z-index: 100;
+      }
+      
+      .sidebar nav {
+        pointer-events: auto;
+      }
+    </style>
   </head>
   <body class="admin-dashboard">
     <div class="sidebar nav" id="sidebar">
@@ -2221,31 +2287,248 @@
         }
       }
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const navItems = document.querySelectorAll('.lecturer-nav-item');
+      // Simple global functions for section management
+      function showAdminSection(targetId) {
+        console.log('showAdminSection called with:', targetId);
         const sections = document.querySelectorAll('.section');
-        // Show dashboard by default
-        sections.forEach(sec => { sec.style.display = sec.id === 'dashboard' ? 'block' : 'none'; });
+        sections.forEach(sec => {
+          sec.style.setProperty('display', 'none', 'important');
+          sec.classList.remove('active');
+        });
+        
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          targetSection.style.setProperty('display', 'block', 'important');
+          targetSection.classList.add('active');
+          console.log('Showing section:', targetId);
+        } else {
+          console.error('Section not found:', targetId);
+        }
+      }
+      
+      function setActiveAdminNav(targetId) {
+        console.log('setActiveAdminNav called with:', targetId);
+        const navItems = document.querySelectorAll('.lecturer-nav-item');
         navItems.forEach(item => {
-          item.addEventListener('click', (e) => {
-            const target = item.getAttribute('data-target');
-            if (!target || target === 'logout' || target === 'courses') return; // external or no-op
-            e.preventDefault();
-            sections.forEach(sec => { sec.style.display = (sec.id === target) ? 'block' : 'none'; });
-            navItems.forEach(a => a.classList.remove('active'));
+          item.classList.remove('active');
+          if (item.getAttribute('data-target') === targetId) {
             item.classList.add('active');
-            if (target === 'calendar') {
-              console.log('Calendar section clicked, initializing calendar...');
-              adminRenderCalendar();
-            }
-            if (target === 'users') adminRenderUsers();
-            if (target === 'lecturers') adminRenderLecturers();
-            if (target === 'students') adminRenderStudents();
-            if (target === 'attendance') adminRenderAttendance();
-            if (target === 'settings') adminLoadSettings();
-          });
+            console.log('Set active nav item:', targetId);
+          }
+        });
+      }
+      
+      // Function to show specific sections (for quick actions)
+      window.showSection = function(sectionId) {
+        const sections = document.querySelectorAll('.section');
+        
+        // Hide all sections
+        sections.forEach((sec) => {
+          sec.style.setProperty('display', 'none', 'important');
+        });
+        
+        // Show target section
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+          targetSection.style.setProperty('display', 'block', 'important');
+        }
+        
+        // Update active state
+        document.querySelectorAll('.lecturer-nav-item').forEach(item => {
+          item.classList.remove('active');
+        });
+        const activeNavItem = document.querySelector(`.lecturer-nav-item[data-target="${sectionId}"]`);
+        if (activeNavItem) {
+          activeNavItem.classList.add('active');
+        }
+      };
+      
+      // Global navigation handler (fallback for any old references)
+      window.handleNavClick = function(target) {
+        console.log('handleNavClick called with:', target);
+        if (target) {
+          showAdminSection(target);
+          setActiveAdminNav(target);
+        }
+      };
+      
+      // Make functions globally available
+      window.showAdminSection = showAdminSection;
+      window.setActiveAdminNav = setActiveAdminNav;
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM Content Loaded - Admin Dashboard');
+        
+        // Show dashboard by default
+        showAdminSection('dashboard');
+        setActiveAdminNav('dashboard');
+        
+        // Test if sections exist
+        console.log('Available sections:', Array.from(document.querySelectorAll('.section')).map(s => s.id));
+        
+        // Add test button for debugging
+        const testBtn = document.createElement('button');
+        testBtn.textContent = 'Test Calendar';
+        testBtn.style.cssText = 'position:fixed;top:10px;right:10px;z-index:9999;background:red;color:white;padding:10px;';
+        testBtn.onclick = () => {
+          console.log('Test button clicked');
+          const calendarSection = document.getElementById('calendar');
+          if (calendarSection) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(sec => {
+              sec.style.setProperty('display', 'none', 'important');
+            });
+            // Show calendar
+            calendarSection.style.setProperty('display', 'block', 'important');
+            console.log('Calendar section shown');
+          } else {
+            console.error('Calendar section not found');
+          }
+        };
+        document.body.appendChild(testBtn);
+        
+        
+        // Navigation click handlers (Lecturer.html pattern)
+        const sections = document.querySelectorAll('.section');
+        
+        // Hide all sections except dashboard
+        sections.forEach((sec) => {
+          sec.style.setProperty('display', sec.id === 'dashboard' ? 'block' : 'none', 'important');
         });
 
+        // Clean up any existing navigation handlers
+        document.querySelectorAll('.lecturer-nav-item').forEach(item => {
+          item.onclick = null;
+          item.removeAttribute('onclick');
+          // Clone the element to remove all event listeners
+          const newItem = item.cloneNode(true);
+          item.parentNode.replaceChild(newItem, item);
+        });
+        
+        // Navigation click handlers
+        const navItems = document.querySelectorAll('.lecturer-nav-item[data-target]');
+        console.log('Found navigation items:', navItems.length);
+        
+        navItems.forEach((navItem, index) => {
+          const target = navItem.getAttribute('data-target');
+          console.log(`Setting up nav item ${index}:`, target);
+          
+          navItem.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Navigation clicked:', target);
+            
+            // Hide all sections
+            sections.forEach((sec) => {
+              sec.style.setProperty('display', 'none', 'important');
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(target);
+            if (targetSection) {
+              targetSection.style.setProperty('display', 'block', 'important');
+              console.log('Showing section:', target);
+            } else {
+              console.error('Section not found:', target);
+            }
+            
+            // Update active state
+            document.querySelectorAll('.lecturer-nav-item').forEach(item => {
+              item.classList.remove('active');
+            });
+            navItem.classList.add('active');
+            
+            // Initialize section functions
+            if (target === 'calendar' && typeof adminRenderCalendar === 'function') {
+              adminRenderCalendar();
+            }
+            if (target === 'users' && typeof adminRenderUsers === 'function') {
+              adminRenderUsers();
+            }
+            if (target === 'lecturers' && typeof adminRenderLecturers === 'function') {
+              adminRenderLecturers();
+            }
+            if (target === 'students' && typeof adminRenderStudents === 'function') {
+              adminRenderStudents();
+            }
+            if (target === 'attendance' && typeof adminRenderAttendance === 'function') {
+              adminRenderAttendance();
+            }
+            if (target === 'settings' && typeof adminLoadSettings === 'function') {
+              adminLoadSettings();
+            }
+          });
+        });
+        
+        // Handle mobile navigation clicks
+        const mobileNavItems = document.querySelectorAll('#sidebar2 .lecturer-nav-item[data-target]');
+        console.log('Found mobile navigation items:', mobileNavItems.length);
+        
+        mobileNavItems.forEach((navItem, index) => {
+          const target = navItem.getAttribute('data-target');
+          console.log(`Setting up mobile nav item ${index}:`, target);
+          
+          navItem.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Mobile navigation clicked:', target);
+            
+            // Hide all sections
+            sections.forEach((sec) => {
+              sec.style.setProperty('display', 'none', 'important');
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(target);
+            if (targetSection) {
+              targetSection.style.setProperty('display', 'block', 'important');
+              console.log('Showing section:', target);
+            } else {
+              console.error('Section not found:', target);
+            }
+            
+            // Update active state in both sidebars
+            document.querySelectorAll('.lecturer-nav-item').forEach(item => {
+              item.classList.remove('active');
+            });
+            navItem.classList.add('active');
+            
+            // Close mobile sidebar
+            const sidebar = document.getElementById('sidebar2');
+            sidebar.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // Initialize section functions
+            if (target === 'calendar' && typeof adminRenderCalendar === 'function') {
+              adminRenderCalendar();
+            }
+            if (target === 'users' && typeof adminRenderUsers === 'function') {
+              adminRenderUsers();
+            }
+            if (target === 'lecturers' && typeof adminRenderLecturers === 'function') {
+              adminRenderLecturers();
+            }
+            if (target === 'students' && typeof adminRenderStudents === 'function') {
+              adminRenderStudents();
+            }
+            if (target === 'attendance' && typeof adminRenderAttendance === 'function') {
+              adminRenderAttendance();
+            }
+            if (target === 'settings' && typeof adminLoadSettings === 'function') {
+              adminLoadSettings();
+            }
+          });
+        });
+        
+        // Handle external links in mobile sidebar
+        document.querySelectorAll('#sidebar2 .lecturer-nav-item[href]:not([data-target])').forEach(navItem => {
+          navItem.addEventListener('click', () => {
+            // Close mobile sidebar before navigation
+            const sidebar = document.getElementById('sidebar2');
+            sidebar.classList.remove('active');
+            document.body.style.overflow = '';
+          });
+        });
+        
+        
         // Initialize language selector
         adminLanguageSelect = document.getElementById('admin-language-select');
         if (adminLanguageSelect) {
