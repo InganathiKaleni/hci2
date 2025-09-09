@@ -1,0 +1,3142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lecturer Dash Edu-Tend System</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/2.30.0/date-fns.min.js"></script>
+  </head>
+  <body class="admin-dashboard">
+    <div class="sidebar nav" id="sidebar">
+      <h2 data-translate="sidebar-title">Lecturer Dashboard</h2>
+      <nav>
+        <a href="#" class="lecturer-nav-item active" data-target="dashboard">
+          <i class="mr-3 fas fa-tachometer-alt"></i> <span data-translate="nav-dashboard">Dashboard</span>
+        </a>
+        <a href="#" class="lecturer-nav-item" data-target="profile">
+          <i class="mr-3 fas fa-user"></i> <span data-translate="nav-profile">Profile</span>
+        </a>
+        <a href="#" class="lecturer-nav-item" data-target="calendar">
+          <i class="mr-3 fas fa-calendar"></i> <span data-translate="nav-calendar">Calendar</span>
+        </a>
+        <a href="lecturec.html" class="lecturer-nav-item">
+          <i class="mr-3 fas fa-book"></i> <span data-translate="nav-courses">Course Management</span>
+        </a>
+        <a href="#" class="lecturer-nav-item" data-target="qrcode">
+          <i class="mr-3 fas fa-qrcode"></i> <span data-translate="nav-qr-generator">Generate QR Code</span>
+        </a>
+        <a href="#" class="lecturer-nav-item" data-target="attendance">
+          <i class="mr-3 fas fa-check"></i> <span data-translate="nav-attendance">Attendance Records</span>
+        </a>
+        <a href="#" class="lecturer-nav-item" data-target="reports">
+          <i class="mr-3 fas fa-chart-bar"></i> <span data-translate="nav-reports">Reports</span>
+        </a>
+        <a href="#" class="lecturer-nav-item" data-target="settings">
+          <i class="mr-3 fas fa-cog"></i> <span data-translate="nav-settings">Settings</span>
+        </a>
+        <a href="index.html" class="lecturer-nav-item">
+          <i class="mr-3 fas fa-sign-out-alt"></i> <span data-translate="nav-logout">Logout</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="main-content">
+      <header class="header">
+
+        <div class="toggle">
+          <button id="sidebar-toggle" class="toggle-btn" aria-label="Open Menu">
+            <i class="fas fa-bars"></i>
+          </button>
+          <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Dark Mode">
+            <i class="fas fa-moon"></i>
+          </button>
+          <button onclick="document.body.classList.toggle('dark-mode')" style="background: red; color: white; padding: 5px; margin-left: 5px;">
+            TEST DARK
+          </button>
+        </div>
+        
+
+        <div class="sidebar2" id="sidebar2">
+          <div class="sidebar-header">
+            <div class="sidebar-title">
+              <h2 class="h1" data-translate="sidebar-title">Lecturer Dashboard</h2>
+              <p class="h2" data-translate="sidebar-subtitle">EdUTEND System</p>
+            </div>
+            <button id="sidebar-close" class="sidebar-close-btn" aria-label="Close Menu">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          
+          <nav class="mobile-nav">
+            <a href="#" class="lecturer-nav-item active" data-target="dashboard">
+              <i class="fas fa-tachometer-alt"></i>
+              <span data-translate="nav-dashboard">Dashboard</span>
+            </a>
+            <a href="#" class="lecturer-nav-item" data-target="profile">
+              <i class="fas fa-user"></i>
+              <span data-translate="nav-profile">Profile</span>
+            </a>
+            <a href="#" class="lecturer-nav-item" data-target="calendar">
+              <i class="fas fa-calendar"></i>
+              <span data-translate="nav-calendar">Calendar</span>
+            </a>
+            <a href="lecturec.html" class="lecturer-nav-item">
+              <i class="fas fa-book"></i>
+              <span data-translate="nav-courses">Course Management</span>
+            </a>
+            <a href="#" class="lecturer-nav-item" data-target="qrcode">
+              <i class="fas fa-qrcode"></i>
+              <span data-translate="nav-qr-generator">Generate QR Code</span>
+            </a>
+            <a href="#" class="lecturer-nav-item" data-target="attendance">
+              <i class="fas fa-check"></i>
+              <span data-translate="nav-attendance">Attendance Records</span>
+            </a>
+            <a href="#" class="lecturer-nav-item" data-target="reports">
+              <i class="fas fa-chart-bar"></i>
+              <span data-translate="nav-reports">Reports</span>
+            </a>
+            <a href="#" class="lecturer-nav-item" data-target="settings">
+              <i class="fas fa-cog"></i>
+              <span data-translate="nav-settings">Settings</span>
+            </a>
+            <a href="index.html" class="lecturer-nav-item logout-item">
+              <i class="fas fa-sign-out-alt"></i>
+              <span data-translate="nav-logout">Logout</span>
+            </a>
+          </nav>
+          
+
+          <div class="mobile-user-info">
+            <div class="user-avatar">LC</div>
+            <div class="user-details">
+              <p class="user-name">Lecturer</p>
+              <p class="user-role">Course Instructor</p>
+            </div>
+          </div>
+        </div>
+        
+
+        <div class="user-info">
+          <span data-translate="welcome-lecturer">Welcome, Lecturer</span>
+        </div>
+        <div class="header-actions"></div>
+      </header>
+
+      <div id="dashboard" class="section">
+        <h3 data-translate="dashboard-overview">Dashboard Overview</h3>
+        
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-box">
+            <i class="fas fa-book stat-icon"></i>
+            <div class="stat-content">
+              <div class="stat-label" data-translate="dashboard-total-courses">Total Courses</div>
+              <div class="stat-value" id="total-courses">4</div>
+            </div>
+          </div>
+          <div class="stat-box">
+            <i class="fas fa-users stat-icon"></i>
+            <div class="stat-content">
+              <div class="stat-label" data-translate="dashboard-total-students">Total Students</div>
+              <div class="stat-value" id="total-students">156</div>
+            </div>
+          </div>
+          <div class="stat-box">
+            <i class="fas fa-check-circle stat-icon"></i>
+            <div class="stat-content">
+              <div class="stat-label" data-translate="dashboard-attendance-rate">Attendance Rate</div>
+              <div class="stat-value" id="attendance-rate">87%</div>
+            </div>
+          </div>
+          <div class="stat-box">
+            <i class="fas fa-qrcode stat-icon"></i>
+            <div class="stat-content">
+              <div class="stat-label" data-translate="dashboard-qr-generated">QR Codes Generated</div>
+              <div class="stat-value" id="qr-generated">12</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <h4 data-translate="quick-actions">Quick Actions</h4>
+          <div class="action-buttons">
+            <button class="action-btn" onclick="showSection('qrcode')">
+              <i class="fas fa-qrcode"></i>
+              <span data-translate="generate-qr">Generate QR Code</span>
+            </button>
+            <button class="action-btn" onclick="showSection('attendance')">
+              <i class="fas fa-check"></i>
+              <span data-translate="view-attendance">View Attendance</span>
+            </button>
+            <button class="action-btn" onclick="showSection('reports')">
+              <i class="fas fa-chart-bar"></i>
+              <span data-translate="generate-report">Generate Report</span>
+            </button>
+            <button class="action-btn" onclick="window.location.href='lecturec.html'">
+              <i class="fas fa-book"></i>
+              <span data-translate="manage-courses">Manage Courses</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Activities -->
+        <div class="recent-activities">
+          <h4 data-translate="recent-activities">Recent Activities</h4>
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-qrcode"></i>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title" data-translate="qr-generated">QR Code Generated</div>
+                <div class="activity-desc">HUMAN COMPUTER INTERACTION II - Session 3</div>
+                <div class="activity-time">2 hours ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-check"></i>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title" data-translate="attendance-recorded">Attendance Recorded</div>
+                <div class="activity-desc">TECHNICAL PROGRAMMING I - 42 students present</div>
+                <div class="activity-time">4 hours ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-book"></i>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title" data-translate="course-updated">Course Updated</div>
+                <div class="activity-desc">DEVELOPMENT SOFTWARE II - Assignment deadline extended</div>
+                <div class="activity-time">1 day ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-chart-bar"></i>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title" data-translate="report-generated">Report Generated</div>
+                <div class="activity-desc">INFORMATION SYSTEM II - Weekly attendance report</div>
+                <div class="activity-time">3 days ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Today's Schedule -->
+        <div class="today-schedule">
+          <h4 data-translate="today-schedule">Today's Schedule</h4>
+          <div class="schedule-list">
+            <div class="schedule-item">
+              <div class="schedule-time">09:00 - 10:30</div>
+              <div class="schedule-content">
+                <div class="schedule-title">TECHNICAL PROGRAMMING I</div>
+                <div class="schedule-location">C2F2 - Computer Lab</div>
+              </div>
+              <div class="schedule-status">
+                <span class="status-badge upcoming" data-translate="upcoming">Upcoming</span>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-time">11:00 - 12:30</div>
+              <div class="schedule-content">
+                <div class="schedule-title">DEVELOPMENT SOFTWARE II</div>
+                <div class="schedule-location">C2F4 - Computer  Lab</div>
+              </div>
+              <div class="schedule-status">
+                <span class="status-badge upcoming" data-translate="upcoming">Upcoming</span>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="schedule-time">13:00 - 14:30</div>
+              <div class="schedule-content">
+                <div class="schedule-title">INFORMATION SYSTEM II</div>
+                <div class="schedule-location">C6F2 - Computer Lab</div>
+              </div>
+              <div class="schedule-status">
+                <span class="status-badge upcoming" data-translate="upcoming">Upcoming</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tomorrow's Schedule -->
+        <div class="tomorrow-schedule">
+          <h4 data-translate="tomorrow-schedule">Tomorrow's Schedule</h4>
+          <div class="schedule-list">
+            <div class="schedule-item all-day">
+              <div class="schedule-time">All Day</div>
+              <div class="schedule-content">
+                <div class="schedule-title">HUMAN COMPUTER INTERACTION II</div>
+                <div class="schedule-location">Auditorium</div>
+              </div>
+              <div class="schedule-status">
+                <span class="status-badge upcoming" data-translate="upcoming">Upcoming</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="profile" class="section">
+        <h3 data-translate="profile-title">Profile</h3>
+        <div class="profile-card">
+          <div class="profile-header">
+            <div class="avatar" id="profile-avatar">LC</div>
+            <div class="identity">
+              <h4 id="profile-name" data-translate="profile-name-label">Lecturer Name</h4>
+              <p id="profile-email" class="muted">email@example.com</p>
+            </div>
+          </div>
+          <div class="profile-details">
+            <div class="detail"><span data-translate="profile-department">Department</span><strong id="profile-department">—</strong></div>
+            <div class="detail"><span data-translate="profile-office">Office</span><strong id="profile-office">—</strong></div>
+            <div class="detail"><span data-translate="profile-phone">Phone</span><strong id="profile-phone">—</strong></div>
+          </div>
+          <div class="profile-bio">
+            <h5 data-translate="profile-bio">Biography</h5>
+            <p id="profile-bio">Add a short biography in Settings.</p>
+          </div>
+          <div class="profile-actions">
+            <a href="#" class="btn go-settings" data-target="settings" data-translate="profile-edit">Edit Profile</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="qrcode" class="section">
+        <h3 data-translate="qr-generate-title">Generate Session QR Code</h3>
+        
+
+        <div class="course-selection">
+          <label for="course-select" data-translate="qr-select-course">Select Course:</label>
+          <select id="course-select" class="form-field">
+            <option value="" data-translate="qr-choose-course">Choose a course...</option>
+            <option value="HCI">Human Computer Interaction II (HCI)</option>
+            <option value="TEP">Technical Programming I (TEP)</option>
+            <option value="DES">Development Software II (DES)</option>
+            <option value="INF">Information System II (INF)</option>
+            <option value="DEV">Development Software I (DEV)</option>
+            <option value="ITS">Information Technology Skills I (ITS)</option>
+            <option value="IS">Information Systems I (IS)</option>
+            <option value="SS">System Software I (SS)</option>
+          </select>
+        </div>
+        
+        <button class="btn" id="generate-qr-btn" data-translate="qr-generate-btn">Generate PIN &amp; QR Code</button>
+        
+
+        <div id="session-status-indicator" class="session-status-indicator" style="display: none;">
+          <span class="status-dot active"></span>
+          <span class="status-text" data-translate="qr-session-active">Session Active</span>
+        </div>
+        
+
+        <button class="btn btn-danger" id="prominent-close-session-btn" onclick="closeCurrentSession()" style="display: none; margin-top: 10px; width: 100%;">
+          <strong data-translate="qr-close-session">🔒 Close Active Session</strong>
+        </button>
+        
+        <div class="timer-controls">
+          <span data-translate="qr-set-timer">Set timer:</span>
+          <button class="btn" onclick="setTimer(5)">5 min</button>
+          <button class="btn" onclick="setTimer(10)">10 min</button>
+          <button class="btn" onclick="setTimer(15)">15 min</button>
+          <button class="btn btn-danger" id="close-session-btn" onclick="closeCurrentSession()" style="display: none;" data-translate="qr-close-session">Close Session</button>
+        </div>
+        <div id="qr-display-area" class="qr-display-area">
+          <div id="qrcode-container">
+            <div id="qrcodeCanvas"></div>
+          </div>
+          <p id="pin-display"></p>
+          <p id="timer-display" class="timer-display"></p>
+          
+
+          <div class="course-session-info" id="course-session-info" style="display: none;">
+            <h4 data-translate="qr-session-info">Session Information</h4>
+            <p><strong data-translate="qr-course-label">Course:</strong> <span id="qr-course-name">-</span></p>
+            <p><strong data-translate="qr-code-label">Code:</strong> <span id="qr-course-code">-</span></p>
+            <p><strong data-translate="qr-session-id-label">Session ID:</strong> <span id="qr-session-id">-</span></p>
+          </div>
+        </div>
+        
+
+        <div class="recent-sessions">
+          <h4 data-translate="qr-recent-sessions">Recent Course Sessions</h4>
+          <div id="recent-sessions-list" class="sessions-list">
+            <p class="muted" data-translate="qr-no-recent-sessions">No recent sessions found.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="attendance" class="section">
+        <h3 data-translate="attendance-title">Attendance</h3>
+        <div class="attendance-toolbar">
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="attendance-date-filter" data-translate="attendance-date">Date</label>
+              <input type="date" id="attendance-date-filter" />
+            </div>
+            <div class="form-field">
+              <label for="attendance-course-filter" data-translate="attendance-course">Course</label>
+              <select id="attendance-course-filter">
+                <option value="all" data-translate="attendance-all-courses">All Courses</option>
+                <option value="HCI">Human Computer Interaction II</option>
+                <option value="INF">Information Systems II</option>
+                <option value="DEV">Development Software I</option>
+                <option value="ITS">Information Technology Skills I</option>
+                <option value="IS">Information Systems I</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>&nbsp;</label>
+              <button class="btn" id="attendance-refresh-btn" type="button" data-translate="attendance-refresh">Refresh</button>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="attendance-table">
+            <thead>
+              <tr>
+                <th data-translate="attendance-table-session">Session</th>
+                <th data-translate="attendance-table-course">Course</th>
+                <th data-translate="attendance-table-date">Date</th>
+                <th data-translate="attendance-table-time">Time</th>
+                <th data-translate="attendance-table-status">Status</th>
+                <th data-translate="attendance-table-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="attendance-tbody">
+              <tr><td colspan="6" class="centered-cell" data-translate="attendance-no-sessions">No sessions yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="reports" class="section">
+        <h3 data-translate="reports-title">Reports</h3>
+        <div class="attendance-toolbar">
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="report-date-from" data-translate="reports-from">From</label>
+              <input type="date" id="report-date-from" />
+            </div>
+            <div class="form-field">
+              <label for="report-date-to" data-translate="reports-to">To</label>
+              <input type="date" id="report-date-to" />
+            </div>
+            <div class="form-field">
+              <label for="report-course" data-translate="reports-course">Course</label>
+              <select id="report-course">
+                <option value="all" data-translate="reports-all-courses">All Courses</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>&nbsp;</label>
+              <button class="btn" id="report-generate" type="button" data-translate="reports-generate">Generate</button>
+            </div>
+          </div>
+        </div>
+        <div id="report-preview" class="report-preview">
+          <div class="report-card" id="report-card">
+            <h4 data-translate="reports-attendance-report">Attendance Report</h4>
+            <p class="muted" data-translate="reports-instruction">Use filters above and click Generate to see report preview.</p>
+            <div id="report-summary"></div>
+            <div class="table-responsive">
+              <table class="attendance-table" id="report-table">
+                <thead>
+                  <tr>
+                    <th data-translate="reports-table-session">Session</th>
+                    <th data-translate="reports-table-course">Course</th>
+                    <th data-translate="reports-table-date">Date</th>
+                    <th data-translate="reports-table-time">Time</th>
+                    <th data-translate="reports-table-status">Status</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="report-actions">
+          <button class="btn" id="download-pdf" data-translate="reports-download-pdf">Download PDF</button>
+          <button class="btn" id="download-docx" data-translate="reports-download-word">Download Word</button>
+        </div>
+      </div>
+
+      <div id="calendar" class="section">
+        <h3 data-translate="calendar-title">Calendar</h3>
+        <div class="calendar" id="lecturer-calendar">
+          <div class="header">
+            <div class="month" id="calendar-month">Month YYYY</div>
+            <div class="btns">
+              <div class="btn" id="calendar-prev">&#10094;</div>
+              <div class="btn" id="calendar-next">&#10095;</div>
+            </div>
+          </div>
+          <div class="weekdays" id="calendar-weekdays"></div>
+          <div class="days" id="calendar-days"></div>
+        </div>
+
+        <div class="settings-group mt-16">
+          <h4 data-translate="calendar-events-for">Events for <span id="selected-date-label" data-translate="calendar-select-date">Select a date</span></h4>
+          
+
+          <form id="event-form" class="event-form">
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="event-title" data-translate="calendar-event-title">Event Title</label>
+                <input type="text" id="event-title" placeholder="e.g., Lecture: HCI-201" required />
+              </div>
+              <div class="form-field">
+                <label for="event-time" data-translate="calendar-event-time">Time</label>
+                <input type="time" id="event-time" />
+              </div>
+              <div class="form-field">
+                <label for="event-duration" data-translate="calendar-event-duration">Duration (minutes)</label>
+                <input type="number" id="event-duration" min="15" max="480" value="60" />
+              </div>
+              <div class="form-field">
+                <label for="event-type" data-translate="calendar-event-type">Event Type</label>
+                <select id="event-type">
+                  <option value="lecture" data-translate="calendar-event-lecture">Lecture</option>
+                  <option value="tutorial" data-translate="calendar-event-tutorial">Tutorial</option>
+                  <option value="lab" data-translate="calendar-event-lab">Lab Session</option>
+                  <option value="meeting" data-translate="calendar-event-meeting">Meeting</option>
+                  <option value="exam" data-translate="calendar-event-exam">Exam</option>
+                  <option value="other" data-translate="calendar-event-other">Other</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="event-location" data-translate="calendar-event-location">Location</label>
+                <input type="text" id="event-location" placeholder="e.g., Room 101, Block A" />
+              </div>
+              <div class="form-field">
+                <label for="event-description" data-translate="calendar-event-description">Description</label>
+                <textarea id="event-description" rows="2" placeholder="Event description..."></textarea>
+              </div>
+              <div class="form-field">
+                <label for="event-recurring" data-translate="calendar-event-recurring">Recurring Event</label>
+                <select id="event-recurring">
+                  <option value="none" data-translate="calendar-recurring-none">No Recurrence</option>
+                  <option value="daily" data-translate="calendar-recurring-daily">Daily</option>
+                  <option value="weekly" data-translate="calendar-recurring-weekly">Weekly</option>
+                  <option value="biweekly" data-translate="calendar-recurring-biweekly">Bi-weekly</option>
+                  <option value="monthly" data-translate="calendar-recurring-monthly">Monthly</option>
+                </select>
+              </div>
+              <div class="form-field" id="recurring-end-container" style="display: none;">
+                <label for="event-recurring-end" data-translate="calendar-event-end-date">End Date</label>
+                <input type="date" id="event-recurring-end" />
+              </div>
+              <div class="form-field full-width">
+                <label>&nbsp;</label>
+                <button type="submit" class="btn" id="add-event-btn" data-translate="calendar-add-event">Add Event</button>
+                <button type="button" class="btn btn-secondary" id="clear-event-btn" data-translate="calendar-clear-form">Clear Form</button>
+              </div>
+            </div>
+          </form>
+          
+
+          <div class="events-container">
+            <div class="events-header">
+              <h5 data-translate="calendar-events-for">Events for <span id="selected-date-display" data-translate="calendar-select-date">Select a date</span></h5>
+              <button class="btn btn-small" id="export-events-btn" style="display: none;" data-translate="calendar-export-events">Export Events</button>
+            </div>
+            <ul id="events-list" class="events-list"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div id="settings" class="section">
+        <h3 data-translate="settings-title">Lecturer Settings</h3>
+
+        <form id="lecturer-settings-form">
+          <div class="settings-group">
+            <h4 data-translate="settings-profile">Profile</h4>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="lecturer-name" data-translate="profile-name">Full Name</label>
+                <input type="text" id="lecturer-name" placeholder="Enter your full name" />
+              </div>
+              <div class="form-field">
+                <label for="lecturer-email" data-translate="profile-email">Email</label>
+                <input type="email" id="lecturer-email" placeholder="name@example.com" />
+              </div>
+              <div class="form-field">
+                <label for="lecturer-department" data-translate="profile-department">Department</label>
+                <input type="text" id="lecturer-department" placeholder="e.g., Computer Science" />
+              </div>
+              <div class="form-field">
+                <label for="lecturer-office" data-translate="profile-office">Office Location</label>
+                <input type="text" id="lecturer-office" placeholder="e.g., Block B, Room 214" />
+              </div>
+              <div class="form-field">
+                <label for="lecturer-phone" data-translate="profile-phone">Phone</label>
+                <input type="tel" id="lecturer-phone" placeholder="e.g., +27 82 123 4567" />
+              </div>
+              <div class="form-field full-width">
+                <label for="lecturer-bio" data-translate="profile-bio">Biography</label>
+                <textarea id="lecturer-bio" rows="3" placeholder="Short bio..." ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <h4 data-translate="settings-preferences">Preferences</h4>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="default-qr-minutes" data-translate="settings-default-qr-timer">Default QR Timer</label>
+                <select id="default-qr-minutes">
+                  <option value="0">None</option>
+                  <option value="5">5 minutes</option>
+                  <option value="10">10 minutes</option>
+                  <option value="15">15 minutes</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label data-translate="settings-notifications">Notifications</label>
+                <div class="checkboxes">
+                  <label><input type="checkbox" id="notif-email" /> <span data-translate="settings-email-updates">Email updates</span></label>
+                  <label><input type="checkbox" id="notif-sms" /> <span data-translate="settings-sms-alerts">SMS alerts</span></label>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="theme-select" data-translate="settings-theme">Theme</label>
+                <select id="theme-select">
+                  <option value="system" data-translate="settings-theme-system">System default</option>
+                  <option value="light" data-translate="settings-theme-light">Light</option>
+                  <option value="dark" data-translate="settings-theme-dark">Dark</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="lecturer-language-select" data-translate="settings-language">Language</label>
+                <select id="lecturer-language-select">
+                  <option value="en" data-translate="settings-language-en">English</option>
+                  <option value="xh" data-translate="settings-language-xh">Xhosa</option>
+                  <option value="st" data-translate="settings-language-st">Sesotho</option>
+                  <option value="tn" data-translate="settings-language-tn">Setswana</option>
+                  <option value="zu" data-translate="settings-language-zu">Zulu</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <h4 data-translate="settings-security">Security</h4>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="current-password" data-translate="settings-current-password">Current Password</label>
+                <input type="password" id="current-password" placeholder="••••••••" autocomplete="current-password" />
+              </div>
+              <div class="form-field">
+                <label for="new-password" data-translate="settings-new-password">New Password</label>
+                <input type="password" id="new-password" placeholder="••••••••" autocomplete="new-password" />
+              </div>
+              <div class="form-field">
+                <label for="confirm-password" data-translate="settings-confirm-password">Confirm New Password</label>
+                <input type="password" id="confirm-password" placeholder="••••••••" autocomplete="new-password" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn" id="save-settings-btn" data-translate="settings-save">Save Settings</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    
+
+
+    <script src="js/modules/auth.js"></script>
+    <script src="js/modules/qr-manager.js"></script>
+    <script src="js/app.js"></script>
+    
+    <script>
+      // Lecturer translations
+      const lecturerTranslations = {
+        en: {
+          // Navigation
+          'nav-dashboard': 'Dashboard',
+          'nav-profile': 'Profile',
+          'nav-courses': 'Course Management',
+          'nav-qr-generator': 'Generate QR Code',
+          'nav-attendance': 'Attendance Records',
+          'nav-calendar': 'Calendar',
+          'nav-reports': 'Reports',
+          'nav-settings': 'Settings',
+          'nav-logout': 'Logout',
+          
+          // Dashboard
+          'dashboard-title': 'Lecturer Dashboard',
+          'sidebar-title': 'Lecturer Dashboard',
+          'sidebar-subtitle': 'EdUTEND System',
+          'profile-name-label': 'Lecturer Name',
+          'settings-title': 'Lecturer Settings',
+          'welcome-lecturer': 'Welcome, Lecturer',
+          'total-courses': 'Total Courses',
+          'active-sessions': 'Active Sessions',
+          'total-students': 'Total Students',
+          
+          // Profile
+          'profile-title': 'Profile',
+          'profile-name': 'Full Name',
+          'profile-email': 'Email',
+          'profile-department': 'Department',
+          'profile-office': 'Office Location',
+          'profile-phone': 'Phone',
+          'profile-bio': 'Biography',
+          'profile-edit': 'Edit Profile',
+          
+          // Settings
+          'settings-title': 'Lecturer Settings',
+          'settings-profile': 'Profile',
+          'settings-preferences': 'Preferences',
+          'settings-security': 'Security',
+          'settings-save': 'Save Settings',
+          'settings-theme': 'Theme',
+          'settings-theme-system': 'System default',
+          'settings-theme-light': 'Light',
+          'settings-theme-dark': 'Dark',
+          'settings-language': 'Language',
+          'settings-language-en': 'English',
+          'settings-language-xh': 'Xhosa',
+          'settings-language-st': 'Sesotho',
+          'settings-language-tn': 'Setswana',
+          'settings-language-zu': 'Zulu',
+          'settings-current-password': 'Current Password',
+          'settings-new-password': 'New Password',
+          'settings-confirm-password': 'Confirm New Password',
+          'settings-default-qr-timer': 'Default QR Timer',
+          'settings-notifications': 'Notifications',
+          'settings-email-updates': 'Email updates',
+          'settings-sms-alerts': 'SMS alerts',
+          'settings-saved': 'Settings saved',
+          
+          // Dashboard additional
+          'dashboard-overview': 'Dashboard Overview',
+          'dashboard-welcome': 'Welcome to our dashboard',
+          
+          // QR Generator additional
+          'qr-generate-title': 'Generate Session QR Code',
+          'qr-select-course': 'Select Course:',
+          'qr-choose-course': 'Choose a course...',
+          'qr-generate-btn': 'Generate PIN & QR Code',
+          'qr-session-active': 'Session Active',
+          'qr-close-session': 'Close Active Session',
+          'qr-set-timer': 'Set timer:',
+          'qr-session-info': 'Session Information',
+          'qr-course-label': 'Course:',
+          'qr-code-label': 'Code:',
+          'qr-session-id-label': 'Session ID:',
+          
+          // Reports additional
+          'reports-title': 'Reports',
+          'reports-from': 'From',
+          'reports-to': 'To',
+          'reports-course': 'Course',
+          'reports-all-courses': 'All Courses',
+          'reports-generate': 'Generate',
+          'reports-attendance-report': 'Attendance Report',
+          'reports-instruction': 'Use filters above and click Generate to see report preview.',
+          'reports-table-session': 'Session',
+          'reports-table-course': 'Course',
+          'reports-table-date': 'Date',
+          'reports-table-time': 'Time',
+          'reports-table-status': 'Status',
+          'reports-download-pdf': 'Download PDF',
+          'reports-download-word': 'Download Word',
+          
+          // Calendar additional
+          'calendar-title': 'Calendar',
+          'calendar-events-for': 'Events for',
+          'calendar-select-date': 'Select a date',
+          'calendar-event-title': 'Event Title',
+          'calendar-event-time': 'Time',
+          'calendar-event-duration': 'Duration (minutes)',
+          'calendar-event-type': 'Event Type',
+          'calendar-event-lecture': 'Lecture',
+          'calendar-event-tutorial': 'Tutorial',
+          'calendar-event-lab': 'Lab Session',
+          'calendar-event-meeting': 'Meeting',
+          'calendar-event-exam': 'Exam',
+          'calendar-event-other': 'Other',
+          'calendar-event-location': 'Location',
+          'calendar-event-description': 'Description',
+          'calendar-event-recurring': 'Recurring Event',
+          'calendar-recurring-none': 'No Recurrence',
+          'calendar-recurring-daily': 'Daily',
+          'calendar-recurring-weekly': 'Weekly',
+          'calendar-recurring-biweekly': 'Bi-weekly',
+          'calendar-recurring-monthly': 'Monthly',
+          'calendar-event-end-date': 'End Date',
+          'calendar-add-event': 'Add Event',
+          'calendar-clear-form': 'Clear Form',
+          'calendar-export-events': 'Export Events',
+          
+          // Calendar months
+          'month-january': 'January',
+          'month-february': 'February',
+          'month-march': 'March',
+          'month-april': 'April',
+          'month-may': 'May',
+          'month-june': 'June',
+          'month-july': 'July',
+          'month-august': 'August',
+          'month-september': 'September',
+          'month-october': 'October',
+          'month-november': 'November',
+          'month-december': 'December',
+          
+          // Calendar days of the week
+          'day-sunday': 'Sun',
+          'day-monday': 'Mon',
+          'day-tuesday': 'Tue',
+          'day-wednesday': 'Wed',
+          'day-thursday': 'Thu',
+          'day-friday': 'Fri',
+          'day-saturday': 'Sat',
+          'calendar-today': 'Today',
+          'calendar-event-added': 'Event added successfully!',
+          'calendar-loaded': 'Calendar loaded successfully!',
+          'calendar-delete-confirm': 'Are you sure you want to delete this event?',
+          
+          // QR Generator additional
+          'qr-recent-sessions': 'Recent Course Sessions',
+          'qr-no-recent-sessions': 'No recent sessions found.',
+          'qr-expired': 'Expired!',
+          'qr-pin-expired': 'PIN EXPIRED',
+          'qr-session-expired': 'Session Expired',
+          'qr-view-details': 'View Details',
+          
+          // Attendance Overlay additional
+          'attendance-overlay-title': 'Session Details',
+          'attendance-overlay-session': 'Session:',
+          'attendance-overlay-course': 'Course:',
+          'attendance-overlay-date': 'Date:',
+          'attendance-overlay-time': 'Time:',
+          'attendance-overlay-status': 'Status:',
+          'attendance-overlay-attendees': 'Attendees',
+          'attendance-overlay-no-attendees': 'No attendees recorded.',
+          'attendance-overlay-close': 'Close',
+          
+          // Attendance additional
+          'attendance-title': 'Attendance',
+          'attendance-date': 'Date',
+          'attendance-course': 'Course',
+          'attendance-all-courses': 'All Courses',
+          'attendance-refresh': 'Refresh',
+          'attendance-table-session': 'Session',
+          'attendance-table-course': 'Course',
+          'attendance-table-date': 'Date',
+          'attendance-table-time': 'Time',
+          'attendance-table-status': 'Status',
+          'attendance-table-actions': 'Actions',
+          'attendance-no-sessions': 'No sessions yet.'
+        },
+        xh: {
+          // Navigation
+          'nav-dashboard': 'Deshibhodi',
+          'nav-profile': 'Iprofayile',
+          'nav-courses': 'Ulawulo lweSifundo',
+          'nav-qr-generator': 'Yenza ikhowudi ye-QR',
+          'nav-attendance': 'Amanqaku okuba khona',
+          'nav-calendar': 'Ikhaleda',
+          'nav-reports': 'Iingxelo',
+          'nav-settings': 'Izicwangciso',
+          'nav-logout': 'Phuma',
+          
+          // Dashboard
+          'dashboard-title': 'Deshibhodi yoMfundisi',
+          'sidebar-title': 'Deshibhodi yoMfundisi',
+          'sidebar-subtitle': 'I-EdUTEND System',
+          'profile-name-label': 'Igama loMfundisi',
+          'settings-title': 'Izicwangciso zoMfundisi',
+          'welcome-lecturer': 'Wamkelekile, Mfundisi',
+          'total-courses': 'Izifundo zeZonke',
+          'active-sessions': 'Iiseshoni ezisebenzayo',
+          'total-students': 'Abafundi beZonke',
+          
+          // Profile
+          'profile-title': 'Iprofayile',
+          'profile-name': 'Igama elipheleleyo',
+          'profile-email': 'I-imeyili',
+          'profile-department': 'ISebe',
+          'profile-office': 'Indawo yeOfisi',
+          'profile-phone': 'Ifowuni',
+          'profile-bio': 'Ibhayografi',
+          'profile-edit': 'Hlela Iprofayile',
+          
+          // Settings
+          'settings-title': 'Izicwangciso zoMfundisi',
+          'settings-profile': 'Iprofayile',
+          'settings-preferences': 'Okukhethwayo',
+          'settings-security': 'Ukhuseleko',
+          'settings-save': 'Gcina Izicwangciso',
+          'settings-theme': 'Isihloko',
+          'settings-theme-system': 'Isicwangciso seSistimu',
+          'settings-theme-light': 'Ukukhanya',
+          'settings-theme-dark': 'Ubumnyama',
+          'settings-language': 'Ulwimi',
+          'settings-language-en': 'IsiNgesi',
+          'settings-language-xh': 'IsiXhosa',
+          'settings-language-st': 'Sesotho',
+          'settings-language-tn': 'Setswana',
+          'settings-language-zu': 'IsiZulu',
+          'settings-current-password': 'Igama lokugqitha langoku',
+          'settings-new-password': 'Igama lokugqitha elitsha',
+          'settings-confirm-password': 'Qinisekisa Igama lokugqitha elitsha',
+          'settings-default-qr-timer': 'Isiqalisi se-QR esingumgangatho',
+          'settings-notifications': 'Izaziso',
+          'settings-email-updates': 'Izaziso ze-imeyili',
+          'settings-sms-alerts': 'Izaziso ze-SMS',
+          'settings-saved': 'Izicwangciso zigciniwe',
+          
+          // Dashboard additional
+          'dashboard-overview': 'Isishwankathelo seDeshibhodi',
+          'dashboard-welcome': 'Wamkelekile kwideshibhodi yethu',
+          
+          // QR Generator additional
+          'qr-generate-title': 'Yenza ikhowudi ye-QR yeSeshoni',
+          'qr-select-course': 'Khetha isifundo:',
+          'qr-choose-course': 'Khetha isifundo...',
+          'qr-generate-btn': 'Yenza iPIN neKhowudi ye-QR',
+          'qr-session-active': 'ISeshoni Iyasebenza',
+          'qr-close-session': 'Vala ISeshoni Esebenzayo',
+          'qr-set-timer': 'Misela isiqalisi:',
+          'qr-session-info': 'Ulwazi lweSeshoni',
+          'qr-course-label': 'Isifundo:',
+          'qr-code-label': 'Ikhowudi:',
+          'qr-session-id-label': 'ID yeSeshoni:',
+          
+          // Reports additional
+          'reports-title': 'Iingxelo',
+          'reports-from': 'Ukusuka',
+          'reports-to': 'Ukuya',
+          'reports-course': 'Isifundo',
+          'reports-all-courses': 'Zonke Izifundo',
+          'reports-generate': 'Yenza',
+          'reports-attendance-report': 'Ingxelo yokuba khona',
+          'reports-instruction': 'Sebenzisa izihluzi ngentla bese ucofa Yenza ukuze ubone isishwankathelo seengxelo.',
+          'reports-table-session': 'ISeshoni',
+          'reports-table-course': 'Isifundo',
+          'reports-table-date': 'Umhla',
+          'reports-table-time': 'Ixesha',
+          'reports-table-status': 'Isimo',
+          'reports-download-pdf': 'Khuphela i-PDF',
+          'reports-download-word': 'Khuphela i-Word',
+          
+          // Calendar additional
+          'calendar-title': 'Ikhaleda',
+          'calendar-events-for': 'Iimini ze',
+          'calendar-select-date': 'Khetha umhla',
+          'calendar-event-title': 'Isihloko seMvakalelo',
+          'calendar-event-time': 'Ixesha',
+          'calendar-event-duration': 'Ubude (imizuzu)',
+          'calendar-event-type': 'Uhlobo lweMvakalelo',
+          'calendar-event-lecture': 'Isifundo',
+          'calendar-event-tutorial': 'Isifundo esingqongqo',
+          'calendar-event-lab': 'ISeshoni yeLab',
+          'calendar-event-meeting': 'Intlanganiso',
+          'calendar-event-exam': 'Uvavanyo',
+          'calendar-event-other': 'Okunye',
+          'calendar-event-location': 'Indawo',
+          'calendar-event-description': 'Inkcazo',
+          'calendar-event-recurring': 'IMvakalelo ephindayo',
+          'calendar-recurring-none': 'Akukho kuphindwa',
+          'calendar-recurring-daily': 'Yonke imihla',
+          'calendar-recurring-weekly': 'Yonke iveki',
+          'calendar-recurring-biweekly': 'Kabini ngeveki',
+          'calendar-recurring-monthly': 'Yonke inyanga',
+          'calendar-event-end-date': 'Umhla wokuphela',
+          'calendar-add-event': 'Yongeza iMvakalelo',
+          'calendar-clear-form': 'Coca iFomu',
+          'calendar-export-events': 'Thumela iMvakalelo',
+          
+          // Calendar months
+          'month-january': 'uJanuwari',
+          'month-february': 'uFebruwari',
+          'month-march': 'uMatshi',
+          'month-april': 'uEpreli',
+          'month-may': 'uMeyi',
+          'month-june': 'uJuni',
+          'month-july': 'uJulayi',
+          'month-august': 'uAgasti',
+          'month-september': 'uSeptemba',
+          'month-october': 'uOktobha',
+          'month-november': 'uNovemba',
+          'month-december': 'uDisemba',
+          
+          // Calendar days of the week
+          'day-sunday': 'iCa',
+          'day-monday': 'uMv',
+          'day-tuesday': 'uLw',
+          'day-wednesday': 'uLt',
+          'day-thursday': 'uLu',
+          'day-friday': 'uMg',
+          'day-saturday': 'uSa',
+          'calendar-today': 'Namhlanje',
+          'calendar-event-added': 'IMvakalelo yongezwe ngempumelelo!',
+          'calendar-loaded': 'IKhalenda ilayishwe ngempumelelo!',
+          'calendar-delete-confirm': 'Uqinisekile ukuthi ufuna ukususa lo mvakalelo?',
+          
+          // QR Generator additional
+          'qr-recent-sessions': 'Iiseshoni zakamuva zeSifundo',
+          'qr-no-recent-sessions': 'Akukho ziseshoni zakamuva zifunyenweyo.',
+          'qr-expired': 'Iphelile!',
+          'qr-pin-expired': 'I-PIN IPHELILE',
+          'qr-session-expired': 'ISeshoni Iphelile',
+          'qr-view-details': 'Jonga Iinkcukacha',
+          
+          // Attendance Overlay additional
+          'attendance-overlay-title': 'Iinkcukacha zeSeshoni',
+          'attendance-overlay-session': 'ISeshoni:',
+          'attendance-overlay-course': 'Isifundo:',
+          'attendance-overlay-date': 'Umhla:',
+          'attendance-overlay-time': 'Ixesha:',
+          'attendance-overlay-status': 'Isimo:',
+          'attendance-overlay-attendees': 'Ababekhoyo',
+          'attendance-overlay-no-attendees': 'Akukho bantu ababekhoyo abarekhodiweyo.',
+          'attendance-overlay-close': 'Vala',
+          
+          // Attendance additional
+          'attendance-title': 'Ukuba khona',
+          'attendance-date': 'Umhla',
+          'attendance-course': 'Isifundo',
+          'attendance-all-courses': 'Zonke Izifundo',
+          'attendance-refresh': 'Vuselela',
+          'attendance-table-session': 'ISeshoni',
+          'attendance-table-course': 'Isifundo',
+          'attendance-table-date': 'Umhla',
+          'attendance-table-time': 'Ixesha',
+          'attendance-table-status': 'Isimo',
+          'attendance-table-actions': 'Izenzo',
+          'attendance-no-sessions': 'Akukho ziseshoni zangoku.'
+        },
+        st: {
+          // Navigation
+          'nav-dashboard': 'Dashboard',
+          'nav-profile': 'Profaele',
+          'nav-courses': 'Tsamaiso ea Thuto',
+          'nav-qr-generator': 'Etsa Khoutu ea QR',
+          'nav-attendance': 'Litaba tsa ho ba teng',
+          'nav-calendar': 'Khalenda',
+          'nav-reports': 'Litaba',
+          'nav-settings': 'Litlhophiso',
+          'nav-logout': 'Tsoa',
+          
+          // Dashboard
+          'dashboard-title': 'Dashboard ea Moruti',
+          'sidebar-title': 'Dashboard ea Moruti',
+          'sidebar-subtitle': 'EdUTEND System',
+          'profile-name-label': 'Leina la Moruti',
+          'settings-title': 'Litlhophiso tsa Moruti',
+          'welcome-lecturer': 'Rea u amohela, Moruti',
+          'total-courses': 'Dithuto tsohle',
+          'active-sessions': 'Likopano tse sebetsang',
+          'total-students': 'Barutoana bohle',
+          
+          // Profile
+          'profile-title': 'Profaele',
+          'profile-name': 'Leina le feletseng',
+          'profile-email': 'Email',
+          'profile-department': 'Karaolo',
+          'profile-office': 'Sebakeng sa Ofisi',
+          'profile-phone': 'Mohala',
+          'profile-bio': 'Bophelo ba motho',
+          'profile-edit': 'Fetola Profaele',
+          
+          // Settings
+          'settings-title': 'Litlhophiso tsa Moruti',
+          'settings-profile': 'Profaele',
+          'settings-preferences': 'Likhetho',
+          'settings-security': 'Tšireletso',
+          'settings-save': 'Boloka Litlhophiso',
+          'settings-theme': 'Sebopeho',
+          'settings-theme-system': 'Ea sistimi',
+          'settings-theme-light': 'Leseli',
+          'settings-theme-dark': 'Leffifi',
+          'settings-language': 'Puo',
+          'settings-language-en': 'Senyesemane',
+          'settings-language-xh': 'Sexhosa',
+          'settings-language-st': 'Sesotho',
+          'settings-language-tn': 'Setswana',
+          'settings-language-zu': 'Zulu',
+          'settings-current-password': 'Lentsoe la hajoale',
+          'settings-new-password': 'Lentsoe le lecha',
+          'settings-confirm-password': 'Netefatsa Lentsoe le lecha',
+          'settings-default-qr-timer': 'Taimere ea QR ea tlhaho',
+          'settings-notifications': 'Litsebiso',
+          'settings-email-updates': 'Litsebiso tsa email',
+          'settings-sms-alerts': 'Litsebiso tsa SMS',
+          'settings-saved': 'Litlhophiso li bolokiloe',
+          
+          // Dashboard additional
+          'dashboard-overview': 'Kakaretso ea Dashboard',
+          'dashboard-welcome': 'Rea u amohela dashboard ea rona',
+          
+          // QR Generator additional
+          'qr-generate-title': 'Etsa Khoutu ea QR ea Kopano',
+          'qr-select-course': 'Khetha Thuto:',
+          'qr-choose-course': 'Khetha thuto...',
+          'qr-generate-btn': 'Etsa PIN le Khoutu ea QR',
+          'qr-session-active': 'Kopano e sebetsa',
+          'qr-close-session': 'Koala Kopano e Sebetsang',
+          'qr-set-timer': 'Beha taimere:',
+          'qr-session-info': 'Litaba tsa Kopano',
+          'qr-course-label': 'Thuto:',
+          'qr-code-label': 'Khoutu:',
+          'qr-session-id-label': 'ID ea Kopano:',
+          
+          // Reports additional
+          'reports-title': 'Litaba',
+          'reports-from': 'Ho tloha',
+          'reports-to': 'Ho ea',
+          'reports-course': 'Thuto',
+          'reports-all-courses': 'Lithuto tsohle',
+          'reports-generate': 'Etsa',
+          'reports-attendance-report': 'Litaba tsa ho ba teng',
+          'reports-instruction': 'Sebelisa lifiltha ka holimo ebe u tobetsa Etsa ho bona kakaretso ea litaba.',
+          'reports-table-session': 'Kopano',
+          'reports-table-course': 'Thuto',
+          'reports-table-date': 'Letsatsi',
+          'reports-table-time': 'Nako',
+          'reports-table-status': 'Boemo',
+          'reports-download-pdf': 'Download PDF',
+          'reports-download-word': 'Download Word',
+          
+          // Calendar additional
+          'calendar-title': 'Khalenda',
+          'calendar-events-for': 'Liketsahalo tsa',
+          'calendar-select-date': 'Khetha letsatsi',
+          'calendar-event-title': 'Sehlooho sa Ketsahalo',
+          'calendar-event-time': 'Nako',
+          'calendar-event-duration': 'Bolelele (metsotso)',
+          'calendar-event-type': 'Mofuta oa Ketsahalo',
+          'calendar-event-lecture': 'Thuto',
+          'calendar-event-tutorial': 'Thuto e khutsufatsang',
+          'calendar-event-lab': 'Kopano ea Lab',
+          'calendar-event-meeting': 'Kopano',
+          'calendar-event-exam': 'Tekolo',
+          'calendar-event-other': 'Tse ling',
+          'calendar-event-location': 'Sebaka',
+          'calendar-event-description': 'Tlhaloso',
+          'calendar-event-recurring': 'Ketsahalo e phetoang',
+          'calendar-recurring-none': 'Ha ho phetoa',
+          'calendar-recurring-daily': 'Letsatsi le leng le le leng',
+          'calendar-recurring-weekly': 'Beke le beke',
+          'calendar-recurring-biweekly': 'Kabini ka beke',
+          'calendar-recurring-monthly': 'Khoeli le khoeli',
+          'calendar-event-end-date': 'Letsatsi la ho qetela',
+          'calendar-add-event': 'Kenya Ketsahalo',
+          'calendar-clear-form': 'Hlakola Foromo',
+          'calendar-export-events': 'Romela Liketsahalo',
+          
+          // Calendar months
+          'month-january': 'Pherekgong',
+          'month-february': 'Hlakola',
+          'month-march': 'Hlakubele',
+          'month-april': 'Mmese',
+          'month-may': 'Motsheanong',
+          'month-june': 'Phupjane',
+          'month-july': 'Phupu',
+          'month-august': 'Phata',
+          'month-september': 'Leotshe',
+          'month-october': 'Mphalane',
+          'month-november': 'Pudungwana',
+          'month-december': 'Tshitwe',
+          
+          // Calendar days of the week
+          'day-sunday': 'Sontaha',
+          'day-monday': 'Mantaha',
+          'day-tuesday': 'Labobeli',
+          'day-wednesday': 'Laboraro',
+          'day-thursday': 'Labone',
+          'day-friday': 'Labohlane',
+          'day-saturday': 'Moqebelo',
+          'calendar-today': 'Kajeno',
+          'calendar-event-added': 'Ketsahalo e kentsoe ka katleho!',
+          'calendar-loaded': 'Khalenda e tsamaisitsoe ka katleho!',
+          'calendar-delete-confirm': 'U na le bonnete ba hore u batla ho hlakola ketsahalo ena?',
+          
+          // QR Generator additional
+          'qr-recent-sessions': 'Likopano tsa hajoale tsa Thuto',
+          'qr-no-recent-sessions': 'Ha ho likopano tsa hajoale tse fumanoeng.',
+          'qr-expired': 'E felile!',
+          'qr-pin-expired': 'PIN E FELILE',
+          'qr-session-expired': 'Kopano e Felile',
+          'qr-view-details': 'Bona Litaba',
+          
+          // Attendance Overlay additional
+          'attendance-overlay-title': 'Litaba tsa Kopano',
+          'attendance-overlay-session': 'Kopano:',
+          'attendance-overlay-course': 'Thuto:',
+          'attendance-overlay-date': 'Letsatsi:',
+          'attendance-overlay-time': 'Nako:',
+          'attendance-overlay-status': 'Boemo:',
+          'attendance-overlay-attendees': 'Ba teng',
+          'attendance-overlay-no-attendees': 'Ha ho ba teng ba ngolisitseng.',
+          'attendance-overlay-close': 'Koala',
+          
+          // Attendance additional
+          'attendance-title': 'Ho ba teng',
+          'attendance-date': 'Letsatsi',
+          'attendance-course': 'Thuto',
+          'attendance-all-courses': 'Lithuto tsohle',
+          'attendance-refresh': 'Ntlafatsa',
+          'attendance-table-session': 'Kopano',
+          'attendance-table-course': 'Thuto',
+          'attendance-table-date': 'Letsatsi',
+          'attendance-table-time': 'Nako',
+          'attendance-table-status': 'Boemo',
+          'attendance-table-actions': 'Liketsahalo',
+          'attendance-no-sessions': 'Ha ho likopano hajoale.'
+        },
+        tn: {
+          // Navigation
+          'nav-dashboard': 'Dashboard',
+          'nav-profile': 'Profaele',
+          'nav-courses': 'Tsamaiso ya Thuto',
+          'nav-qr-generator': 'Tlhamela Khoutu ya QR',
+          'nav-attendance': 'Ditlaleho tsa go ba teng',
+          'nav-calendar': 'Khalenda',
+          'nav-reports': 'Ditlaleho',
+          'nav-settings': 'Ditlhophiso',
+          'nav-logout': 'Tswa',
+          
+          // Dashboard
+          'dashboard-title': 'Dashboard ya Moruti',
+          'sidebar-title': 'Dashboard ya Moruti',
+          'sidebar-subtitle': 'EdUTEND System',
+          'profile-name-label': 'Leina la Moruti',
+          'settings-title': 'Ditlhophiso tsa Moruti',
+          'welcome-lecturer': 'Re a go amogela, Moruti',
+          'total-courses': 'Dithuto tsotlhe',
+          'active-sessions': 'Dikopano tse di dirang',
+          'total-students': 'Barutwana botlhe',
+          
+          // Profile
+          'profile-title': 'Profaele',
+          'profile-name': 'Leina le feletseng',
+          'profile-email': 'Email',
+          'profile-department': 'Kgaolo',
+          'profile-office': 'Lefelo la Ofisi',
+          'profile-phone': 'Mohala',
+          'profile-bio': 'Botshelo jwa motho',
+          'profile-edit': 'Fetola Profaele',
+          
+          // Settings
+          'settings-title': 'Ditlhophiso tsa Moruti',
+          'settings-profile': 'Profaele',
+          'settings-preferences': 'Dikgetho',
+          'settings-security': 'Tshireletso',
+          'settings-save': 'Boloka Ditlhophiso',
+          'settings-theme': 'Sebopego',
+          'settings-theme-system': 'Sa sistimi',
+          'settings-theme-light': 'Lesedi',
+          'settings-theme-dark': 'Leffifi',
+          'settings-language': 'Puo',
+          'settings-language-en': 'Sekgowa',
+          'settings-language-xh': 'Sexhosa',
+          'settings-language-st': 'Sesotho',
+          'settings-language-tn': 'Setswana',
+          'settings-language-zu': 'Zulu',
+          'settings-current-password': 'Lentswe la gompieno',
+          'settings-new-password': 'Lentswe le lesha',
+          'settings-confirm-password': 'Netefatsa Lentswe le lesha',
+          'settings-default-qr-timer': 'Taimara ya QR ya tlhago',
+          'settings-notifications': 'Ditsebiso',
+          'settings-email-updates': 'Ditsebiso tsa email',
+          'settings-sms-alerts': 'Ditsebiso tsa SMS',
+          'settings-saved': 'Ditlhophiso di bolokilwe',
+          
+          // Dashboard additional
+          'dashboard-overview': 'Kakaretso ya Dashboard',
+          'dashboard-welcome': 'Re a go amogela dashboard ya rona',
+          
+          // QR Generator additional
+          'qr-generate-title': 'Tlhamela Khoutu ya QR ya Kopano',
+          'qr-select-course': 'Kgethe Thuto:',
+          'qr-choose-course': 'Kgethe thuto...',
+          'qr-generate-btn': 'Tlhamela PIN le Khoutu ya QR',
+          'qr-session-active': 'Kopano e a dira',
+          'qr-close-session': 'Tswala Kopano e e Dirang',
+          'qr-set-timer': 'Bea taimara:',
+          'qr-session-info': 'Ditlaleho tsa Kopano',
+          'qr-course-label': 'Thuto:',
+          'qr-code-label': 'Khoutu:',
+          'qr-session-id-label': 'ID ya Kopano:',
+          
+          // Reports additional
+          'reports-title': 'Ditlaleho',
+          'reports-from': 'Go tswa',
+          'reports-to': 'Go ya',
+          'reports-course': 'Thuto',
+          'reports-all-courses': 'Dithuto tsotlhe',
+          'reports-generate': 'Tlhamela',
+          'reports-attendance-report': 'Ditlaleho tsa go ba teng',
+          'reports-instruction': 'Dirisa difiltha ka godimo mme o tlhage Tlhamela go bona kakaretso ya ditlaleho.',
+          'reports-table-session': 'Kopano',
+          'reports-table-course': 'Thuto',
+          'reports-table-date': 'Letsatsi',
+          'reports-table-time': 'Nako',
+          'reports-table-status': 'Boemo',
+          'reports-download-pdf': 'Download PDF',
+          'reports-download-word': 'Download Word',
+          
+          // Calendar additional
+          'calendar-title': 'Khalenda',
+          'calendar-events-for': 'Diketsahalo tsa',
+          'calendar-select-date': 'Kgethe letsatsi',
+          'calendar-event-title': 'Sehlogo sa Ketsahalo',
+          'calendar-event-time': 'Nako',
+          'calendar-event-duration': 'Bolelele (metsotso)',
+          'calendar-event-type': 'Mofuta wa Ketsahalo',
+          'calendar-event-lecture': 'Thuto',
+          'calendar-event-tutorial': 'Thuto e e tlhagisang',
+          'calendar-event-lab': 'Kopano ya Lab',
+          'calendar-event-meeting': 'Kopano',
+          'calendar-event-exam': 'Tekolo',
+          'calendar-event-other': 'Tse dingwe',
+          'calendar-event-location': 'Lefelo',
+          'calendar-event-description': 'Tlhaloso',
+          'calendar-event-recurring': 'Ketsahalo e e boelang',
+          'calendar-recurring-none': 'Ga go boelang',
+          'calendar-recurring-daily': 'Letsatsi le lengwe le le lengwe',
+          'calendar-recurring-weekly': 'Beke le beke',
+          'calendar-recurring-biweekly': 'Kabini ka beke',
+          'calendar-recurring-monthly': 'Kgwedi le kgwedi',
+          'calendar-event-end-date': 'Letsatsi la bokhutlo',
+          'calendar-add-event': 'Tsenya Ketsahalo',
+          'calendar-clear-form': 'Tlosa Foromo',
+          'calendar-export-events': 'Romela Diketsahalo',
+          
+          // Calendar months
+          'month-january': 'Ferikgong',
+          'month-february': 'Tlhakole',
+          'month-march': 'Tlhakubele',
+          'month-april': 'Mmese',
+          'month-may': 'Motseanong',
+          'month-june': 'Phupjane',
+          'month-july': 'Phupu',
+          'month-august': 'Phata',
+          'month-september': 'Lwetse',
+          'month-october': 'Diphalane',
+          'month-november': 'Ngwanatsele',
+          'month-december': 'Sedimonthole',
+          
+          // Calendar days of the week
+          'day-sunday': 'Tshipi',
+          'day-monday': 'Mosupologo',
+          'day-tuesday': 'Labobedi',
+          'day-wednesday': 'Laboraro',
+          'day-thursday': 'Labone',
+          'day-friday': 'Labotlhano',
+          'day-saturday': 'Matlhatso',
+          'calendar-today': 'Gompieno',
+          'calendar-event-added': 'Ketsahalo e tsenngwe ka katlego!',
+          'calendar-loaded': 'Khalenda e tsamaisitswe ka katlego!',
+          'calendar-delete-confirm': 'O na le bonnete jwa gore o batla go tlosa ketsahalo eno?',
+          
+          // QR Generator additional
+          'qr-recent-sessions': 'Dikopano tsa gompieno tsa Thuto',
+          'qr-no-recent-sessions': 'Ga go na dikopano tsa gompieno tse di fitlhelwang.',
+          'qr-expired': 'E fedile!',
+          'qr-pin-expired': 'PIN E FEDILE',
+          'qr-session-expired': 'Kopano e Fedile',
+          'qr-view-details': 'Bona Ditlaleho',
+          
+          // Attendance Overlay additional
+          'attendance-overlay-title': 'Ditlaleho tsa Kopano',
+          'attendance-overlay-session': 'Kopano:',
+          'attendance-overlay-course': 'Thuto:',
+          'attendance-overlay-date': 'Letsatsi:',
+          'attendance-overlay-time': 'Nako:',
+          'attendance-overlay-status': 'Boemo:',
+          'attendance-overlay-attendees': 'Ba ba teng',
+          'attendance-overlay-no-attendees': 'Ga go na ba ba teng ba ba kwadilweng.',
+          'attendance-overlay-close': 'Tswala',
+          
+          // Attendance additional
+          'attendance-title': 'Go ba teng',
+          'attendance-date': 'Letsatsi',
+          'attendance-course': 'Thuto',
+          'attendance-all-courses': 'Dithuto tsotlhe',
+          'attendance-refresh': 'Ntlafatsa',
+          'attendance-table-session': 'Kopano',
+          'attendance-table-course': 'Thuto',
+          'attendance-table-date': 'Letsatsi',
+          'attendance-table-time': 'Nako',
+          'attendance-table-status': 'Boemo',
+          'attendance-table-actions': 'Ditiro',
+          'attendance-no-sessions': 'Ga go na dikopano gompieno.'
+        },
+        zu: {
+          // Navigation
+          'nav-dashboard': 'Ideshibhodi',
+          'nav-profile': 'Iphrofayili',
+          'nav-courses': 'Ukuphatha Izifundo',
+          'nav-qr-generator': 'Dala Ikhodi ye-QR',
+          'nav-attendance': 'Amarekhodi Wokuba Khona',
+          'nav-calendar': 'Ikhalenda',
+          'nav-reports': 'Imibiko',
+          'nav-settings': 'Izilungiselelo',
+          'nav-logout': 'Phuma',
+          
+          // Dashboard
+          'dashboard-title': 'Ideshibhodi Yomfundisi',
+          'sidebar-title': 'Ideshibhodi Yomfundisi',
+          'sidebar-subtitle': 'Isistimu ye-EdUTEND',
+          'profile-name-label': 'Igama Lomfundisi',
+          'settings-title': 'Izilungiselelo Zomfundisi',
+          'welcome-lecturer': 'Siyakwamukela, Mfundisi',
+          'total-courses': 'Izifundo Eziphelele',
+          'active-sessions': 'Amaseshini Asasebenza',
+          'total-students': 'Abafundi Abaphelele',
+          
+          // Profile
+          'profile-title': 'Iphrofayili',
+          'profile-name': 'Igama Eliphelele',
+          'profile-email': 'I-imeyili',
+          'profile-department': 'Umnyango',
+          'profile-office': 'Indawo Yasehhovisi',
+          'profile-phone': 'Ucingo',
+          'profile-bio': 'Umbhalo Ngaye',
+          'profile-edit': 'Hlela Iphrofayili',
+          
+          // Settings
+          'settings-title': 'Izilungiselelo Zomfundisi',
+          'settings-profile': 'Iphrofayili',
+          'settings-preferences': 'Okukhethwayo',
+          'settings-security': 'Ukuphepha',
+          'settings-save': 'Gcina Izilungiselelo',
+          'settings-theme': 'Isihloko',
+          'settings-theme-system': 'Okungumgangatho weSistimu',
+          'settings-theme-light': 'Ukukhanya',
+          'settings-theme-dark': 'Ubumnyama',
+          'settings-language': 'Ulimi',
+          'settings-language-en': 'IsiNgesi',
+          'settings-language-xh': 'IsiXhosa',
+          'settings-language-st': 'Sesotho',
+          'settings-language-tn': 'Setswana',
+          'settings-language-zu': 'IsiZulu',
+          'settings-current-password': 'Iphasiwedi Yamanje',
+          'settings-new-password': 'Iphasiwedi Entsha',
+          'settings-confirm-password': 'Qinisekisa Iphasiwedi Entsha',
+          'settings-default-qr-timer': 'Isiqalisi Se-QR Esingumgangatho',
+          'settings-notifications': 'Izaziso',
+          'settings-email-notifications': 'Izaziso Ze-imeyili',
+          'settings-sms-notifications': 'Izaziso Ze-SMS',
+          
+          // QR Generator
+          'qr-generator-title': 'Dala Ikhodi ye-QR',
+          'qr-select-course': 'Khetha Isifundo',
+          'qr-choose-course': 'Khetha isifundo ukuze uqale iseshini yokuba khona',
+          'qr-generate-btn': 'Dala Ikhodi ye-QR',
+          'qr-session-active': 'Iseshini Iyasebenza',
+          'qr-close-session': 'Vala Iseshini',
+          'qr-set-timer': 'Setha Isiqalisi',
+          'qr-session-info': 'Ulwazi Lwesehini',
+          'qr-course-label': 'Isifundo',
+          'qr-code-label': 'Ikhodi ye-QR',
+          'qr-session-id-label': 'I-ID Yesehini',
+          'qr-recent-sessions': 'Amaseshini Amuva',
+          'qr-no-recent-sessions': 'Awukho amaseshini amuva.',
+          
+          // Reports
+          'reports-title': 'Imibiko',
+          'reports-from': 'Kusuka',
+          'reports-to': 'Kuya',
+          'reports-course': 'Isifundo',
+          'reports-all-courses': 'Zonke Izifundo',
+          'reports-generate': 'Dala Umbiko',
+          'reports-attendance-report': 'Umbiko Wokuba Khona',
+          'reports-instructions': 'Chofoza "Dala Umbiko" ukuze udale umbiko wokuba khona wezifundo zakho.',
+          'reports-table-date': 'Usuku',
+          'reports-table-course': 'Isifundo',
+          'reports-table-sessions': 'Amaseshini',
+          'reports-table-present': 'Abakhona',
+          'reports-table-absent': 'Abangekho',
+          'reports-table-rate': 'Isilinganiso',
+          'reports-download-pdf': 'Thoba i-PDF',
+          'reports-download-docx': 'Thoba i-DOCX',
+          
+          // Calendar
+          'calendar-title': 'Ikhalenda',
+          'calendar-events-for': 'Imicimbi ye',
+          'calendar-select-date': 'Khetha usuku',
+          'calendar-add-event': 'Engeza Umcimbi',
+          'calendar-event-title': 'Isihloko Somcimbi',
+          'calendar-event-title-placeholder': 'Faka isihloko somcimbi',
+          'calendar-event-date': 'Usuku Lomcimbi',
+          'calendar-event-time': 'Isikhathi Somcimbi',
+          'calendar-event-type': 'Uhlobo Lomcimbi',
+          'calendar-event-course': 'Isifundo',
+          'calendar-select-course': 'Khetha isifundo',
+          'calendar-event-notes': 'Amanothi',
+          'calendar-event-notes-placeholder': 'Faka amanothi ngomcimbi',
+          'calendar-add-event-btn': 'Engeza Umcimbi',
+          'calendar-clear-btn': 'Sula',
+          'calendar-export-events': 'Khipha Imicimbi',
+          'calendar-import-events': 'Faka Imicimbi',
+          'calendar-clear-events': 'Sula Imicimbi',
+          'calendar-print-events': 'Phrinta Imicimbi',
+          
+          // Event Types
+          'event-assignment': 'Umsebenzi',
+          'event-exam': 'Isivivinyo',
+          'event-lecture': 'Isifundo',
+          'event-tutorial': 'Isifundo Sokufundisa',
+          'event-personal': 'Okwakho',
+          
+          // Calendar Table
+          'calendar-table-date': 'Usuku',
+          'calendar-table-time': 'Isikhathi',
+          'calendar-table-title': 'Isihloko',
+          'calendar-table-type': 'Uhlobo',
+          'calendar-table-course': 'Isifundo',
+          'calendar-table-notes': 'Amanothi',
+          'calendar-table-actions': 'Izenzo',
+          'calendar-no-events': 'Awukho imicimbi etholakele.',
+          
+          // Calendar Months
+          'calendar-january': 'uJanuwari',
+          'calendar-february': 'uFebruwari',
+          'calendar-march': 'uMatshi',
+          'calendar-april': 'u-Apreli',
+          'calendar-may': 'uMeyi',
+          'calendar-june': 'uJuni',
+          'calendar-july': 'uJulayi',
+          'calendar-august': 'u-Agasti',
+          'calendar-september': 'uSepthemba',
+          'calendar-october': 'u-Okthoba',
+          'calendar-november': 'uNovemba',
+          'calendar-december': 'uDisemba',
+          
+          // Calendar Days
+          'day-sunday': 'ISonto',
+          'day-monday': 'UMsombuluko',
+          'day-tuesday': 'ULwesibili',
+          'day-wednesday': 'ULwesithathu',
+          'day-thursday': 'ULwesine',
+          'day-friday': 'ULwesihlanu',
+          'day-saturday': 'UMgqibelo',
+          
+          // Calendar Controls
+          'calendar-today': 'Namuhla',
+          'calendar-prev-month': 'Inyanga Edlule',
+          'calendar-next-month': 'Inyanga Ezayo',
+          
+          // Attendance
+          'attendance-title': 'Amarekhodi Wokuba Khona',
+          'attendance-date': 'Usuku',
+          'attendance-course': 'Isifundo',
+          'attendance-all-courses': 'Zonke Izifundo',
+          'attendance-refresh': 'Vuselela',
+          'attendance-table-session': 'Iseshini',
+          'attendance-table-course': 'Isifundo',
+          'attendance-table-date': 'Usuku',
+          'attendance-table-time': 'Isikhathi',
+          'attendance-table-status': 'Isimo',
+          'attendance-table-actions': 'Izenzo',
+          'attendance-no-sessions': 'Awukho amaseshini okwamanje.'
+        }
+      };
+
+      // Global variable for language selector
+      let lecturerLanguageSelect = null;
+
+      function applyLecturerLanguage() {
+        try {
+          const language = lecturerLanguageSelect?.value || 'en';
+          const currentTranslations = lecturerTranslations[language] || lecturerTranslations.en;
+          
+          // Update all elements with data-translate attribute
+          document.querySelectorAll('[data-translate]').forEach(element => {
+            const key = element.getAttribute('data-translate');
+            const translation = currentTranslations[key];
+            if (translation) {
+              element.textContent = translation;
+            }
+          });
+          
+          // Update option elements specifically
+          document.querySelectorAll('option[data-translate]').forEach(option => {
+            const key = option.getAttribute('data-translate');
+            const translation = currentTranslations[key];
+            if (translation) {
+              option.textContent = translation;
+            }
+          });
+          
+          // Update page title
+          document.title = currentTranslations['dashboard-title'] || 'Lecturer Dashboard';
+          
+          // Update calendar month display if calendar is visible
+          if (typeof renderHeader === 'function') {
+            renderHeader();
+          }
+          
+          // Update calendar weekdays display if calendar is visible
+          if (typeof renderWeekdays === 'function') {
+            renderWeekdays();
+          }
+          
+          // Update today button text if it exists
+          if (typeof updateTodayButton === 'function') {
+            updateTodayButton();
+          }
+          
+        } catch (error) {
+          console.error('Error applying lecturer language:', error);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // Initialize dashboard sections
+        const sections = document.querySelectorAll('.section');
+        sections.forEach((sec) => {
+          sec.style.display = sec.id === 'dashboard' ? 'block' : 'none';
+        });
+
+        // Navigation click handlers
+        document.querySelectorAll('.lecturer-nav-item[data-target]').forEach(navItem => {
+          navItem.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = navItem.getAttribute('data-target');
+            
+            // Hide all sections
+            sections.forEach((sec) => {
+              sec.style.display = 'none';
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(target);
+            if (targetSection) {
+              targetSection.style.display = 'block';
+            }
+            
+            // Update active state
+            document.querySelectorAll('.lecturer-nav-item').forEach(item => {
+              item.classList.remove('active');
+            });
+            navItem.classList.add('active');
+            
+          });
+        });
+
+        // Initialize QR Manager
+        let qrManager = null;
+        
+        // Initialize QR Manager when QR code section is accessed
+        document.querySelector('[data-target="qrcode"]').addEventListener('click', () => {
+          if (!qrManager) {
+            qrManager = new QRManager();
+          }
+        });
+
+        // Settings elements
+        const settingsForm = document.getElementById('lecturer-settings-form');
+        const nameInput = document.getElementById('lecturer-name');
+        const emailInput = document.getElementById('lecturer-email');
+        const departmentInput = document.getElementById('lecturer-department');
+        const officeInput = document.getElementById('lecturer-office');
+        const phoneInput = document.getElementById('lecturer-phone');
+        const bioInput = document.getElementById('lecturer-bio');
+        const defaultQrMinutesSelect = document.getElementById('default-qr-minutes');
+        const notifEmailCheckbox = document.getElementById('notif-email');
+        const notifSmsCheckbox = document.getElementById('notif-sms');
+        const themeSelect = document.getElementById('theme-select');
+        lecturerLanguageSelect = document.getElementById('lecturer-language-select');
+        let defaultQrMinutesPref = 0;
+        let themeSetting = 'system';
+        let lecturerLanguageSetting = 'en';
+
+        function loadLecturerSettings() {
+          try {
+            const raw = localStorage.getItem('lecturerSettings');
+            if (!raw) return;
+            
+            const data = JSON.parse(raw);
+            if (!data || typeof data !== 'object') {
+              console.warn('Invalid lecturer settings data format');
+              return;
+            }
+            
+            // Safely set input values with validation
+            if (nameInput && typeof data.name === 'string') nameInput.value = data.name || '';
+            if (emailInput && typeof data.email === 'string') emailInput.value = data.email || '';
+            if (departmentInput && typeof data.department === 'string') departmentInput.value = data.department || '';
+            if (officeInput && typeof data.office === 'string') officeInput.value = data.office || '';
+            if (phoneInput && typeof data.phone === 'string') phoneInput.value = data.phone || '';
+            if (bioInput && typeof data.bio === 'string') bioInput.value = data.bio || '';
+            
+            if (typeof data.defaultQrMinutes === 'number' && data.defaultQrMinutes >= 0) {
+              defaultQrMinutesPref = data.defaultQrMinutes;
+              if (defaultQrMinutesSelect) defaultQrMinutesSelect.value = String(defaultQrMinutesPref);
+            }
+            
+            if (notifEmailCheckbox && typeof data.notifEmail === 'boolean') {
+              notifEmailCheckbox.checked = data.notifEmail;
+            }
+            
+            if (notifSmsCheckbox && typeof data.notifSms === 'boolean') {
+              notifSmsCheckbox.checked = data.notifSms;
+            }
+            
+            if (themeSelect && data.theme && ['system', 'light', 'dark'].includes(data.theme)) {
+              themeSetting = data.theme;
+              themeSelect.value = data.theme;
+            }
+            
+            if (lecturerLanguageSelect && data.language && ['en', 'xh', 'st', 'tn'].includes(data.language)) {
+              lecturerLanguageSetting = data.language;
+              lecturerLanguageSelect.value = data.language;
+            }
+            
+          } catch (e) {
+            console.error('Failed to load lecturer settings:', e);
+            // Clear corrupted data
+            try {
+              localStorage.removeItem('lecturerSettings');
+            } catch (clearError) {
+              console.error('Failed to clear corrupted settings:', clearError);
+            }
+          }
+        }
+
+        function saveLecturerSettings(event) {
+          event?.preventDefault?.();
+          const payload = {
+            name: nameInput?.value?.trim() || '',
+            email: emailInput?.value?.trim() || '',
+            department: departmentInput?.value?.trim() || '',
+            office: officeInput?.value?.trim() || '',
+            phone: phoneInput?.value?.trim() || '',
+            bio: bioInput?.value?.trim() || '',
+            defaultQrMinutes: Number(defaultQrMinutesSelect?.value || 0),
+            notifEmail: !!notifEmailCheckbox?.checked,
+            notifSms: !!notifSmsCheckbox?.checked,
+            theme: themeSelect?.value || 'system',
+            language: lecturerLanguageSelect?.value || 'en',
+          };
+          localStorage.setItem('lecturerSettings', JSON.stringify(payload));
+          defaultQrMinutesPref = payload.defaultQrMinutes;
+          lecturerLanguageSetting = payload.language;
+          
+          // Apply language immediately after saving
+          applyLecturerLanguage();
+          
+          // Get translated message
+          const language = lecturerLanguageSelect?.value || 'en';
+          const currentTranslations = lecturerTranslations[language] || lecturerTranslations.en;
+          const savedMessage = currentTranslations['settings-saved'] || 'Settings saved';
+          alert(savedMessage);
+        }
+
+        settingsForm?.addEventListener('submit', saveLecturerSettings);
+        loadLecturerSettings();
+        
+        // Initialize language selector if no saved language
+        if (lecturerLanguageSelect && !lecturerLanguageSelect.value) {
+          lecturerLanguageSelect.value = 'en';
+          lecturerLanguageSetting = 'en';
+        }
+        
+        // Apply language after settings are loaded
+        setTimeout(() => {
+          applyLecturerLanguage();
+        }, 100);
+        
+        // Apply language when page is fully loaded
+        window.addEventListener('load', () => {
+          setTimeout(() => {
+            applyLecturerLanguage();
+          }, 200);
+        });
+
+        // Populate profile from settings
+        function updateProfileView(){
+          try {
+            const raw = localStorage.getItem('lecturerSettings');
+            const data = raw ? JSON.parse(raw) : {};
+            const name = data.name || 'Lecturer';
+            const email = data.email || 'email@example.com';
+            const department = data.department || '—';
+            const office = data.office || '—';
+            const phone = data.phone || '—';
+            const bio = data.bio || 'Add a short biography in Settings.';
+
+            const initials = name
+              .split(/\s+/)
+              .filter(Boolean)
+              .slice(0,2)
+              .map(s => s[0].toUpperCase())
+              .join('') || 'LC';
+
+            const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+            setText('profile-name', name);
+            setText('profile-email', email);
+            setText('profile-department', department);
+            setText('profile-office', office);
+            setText('profile-phone', phone);
+            setText('profile-bio', bio);
+            const avatar = document.getElementById('profile-avatar');
+            if (avatar) avatar.textContent = initials;
+          } catch {}
+        }
+        updateProfileView();
+
+        // When settings saved, refresh profile
+        settingsForm?.addEventListener('submit', () => {
+          setTimeout(updateProfileView, 0);
+        });
+
+        // Allow "Edit Profile" button to open Settings
+        document.querySelectorAll('.go-settings').forEach(el => {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            sections.forEach((sec) => { sec.style.display = sec.id === 'settings' ? 'block' : 'none'; });
+            document.querySelectorAll('.lecturer-nav-item').forEach(a => a.classList.remove('active'));
+            document.querySelector('.lecturer-nav-item[data-target="settings"]').classList.add('active');
+          });
+        });
+
+        // THEME HANDLING
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+        function getEffectiveTheme() {
+          const value = themeSelect?.value || themeSetting || 'system';
+          if (value === 'system') {
+            return prefersDark && prefersDark.matches ? 'dark' : 'light';
+          }
+          return value;
+        }
+
+        function applyTheme() {
+          const effective = getEffectiveTheme();
+          document.body.classList.toggle('theme-dark', effective === 'dark');
+          document.body.classList.toggle('theme-light', effective === 'light');
+          document.body.setAttribute('data-theme', effective);
+        }
+
+        // Apply on load
+        applyTheme();
+
+        // Update on user change (apply immediately and persist theme only)
+        themeSelect?.addEventListener('change', () => {
+          // persist only the theme into existing settings, without altering other fields
+          try {
+            const raw = localStorage.getItem('lecturerSettings');
+            const current = raw ? JSON.parse(raw) : {};
+            current.theme = themeSelect.value;
+            localStorage.setItem('lecturerSettings', JSON.stringify(current));
+          } catch {}
+          applyTheme();
+        });
+
+        // React to system theme changes when on 'system'
+        prefersDark && prefersDark.addEventListener('change', () => {
+          if ((themeSelect?.value || themeSetting) === 'system') applyTheme();
+        });
+
+        // Update on language change (persist language only)
+        lecturerLanguageSelect?.addEventListener('change', () => {
+          // persist only the language into existing settings, without altering other fields
+          try {
+            const raw = localStorage.getItem('lecturerSettings');
+            const current = raw ? JSON.parse(raw) : {};
+            current.language = lecturerLanguageSelect.value;
+            localStorage.setItem('lecturerSettings', JSON.stringify(current));
+            lecturerLanguageSetting = lecturerLanguageSelect.value;
+            applyLecturerLanguage();
+          } catch (error) {
+            console.error('Error in language change:', error);
+          }
+        });
+        
+        // Manual trigger for testing
+        window.testLanguage = function(lang) {
+          if (lecturerLanguageSelect) {
+            lecturerLanguageSelect.value = lang;
+            lecturerLanguageSetting = lang;
+            applyLecturerLanguage();
+          }
+        };
+
+        function clearExistingTimer() {
+          if (pinExpirationTimer) {
+            clearInterval(pinExpirationTimer);
+            pinExpirationTimer = null;
+          }
+        }
+
+        function markQrExpired() {
+          clearExistingTimer();
+          const language = lecturerLanguageSelect?.value || 'en';
+          const currentTranslations = lecturerTranslations[language] || lecturerTranslations.en;
+          timerDisplay.textContent = currentTranslations['qr-expired'] || 'Expired!';
+          currentPin = null;
+          pinDisplay.textContent = currentTranslations['qr-pin-expired'] || 'PIN EXPIRED';
+          qrDisplayArea.classList.add('expired');
+          if (qrCodeInstance) {
+            // Clear the QR image so the old PIN cannot be scanned
+            qrCodeInstance.clear();
+          }
+          
+          // Mark the current session as closed in courseSessions
+          if (selectedCourse) {
+            try {
+              const courseSessions = JSON.parse(localStorage.getItem('courseSessions') || '[]');
+              const activeSession = courseSessions.find(s => s.status === 'active' && s.courseCode === selectedCourse);
+              if (activeSession) {
+                activeSession.status = 'closed';
+                localStorage.setItem('courseSessions', JSON.stringify(courseSessions));
+                displayRecentSessions(); // Refresh the display
+              }
+            } catch (e) {
+              console.warn('Failed to update course session status:', e);
+            }
+          }
+          
+          // Hide the session status indicator and close session buttons
+          document.getElementById('session-status-indicator').style.display = 'none';
+          document.getElementById('close-session-btn').style.display = 'none';
+          document.getElementById('prominent-close-session-btn').style.display = 'none';
+        }
+
+        // Timer functionality
+        function setTimer(minutes) {
+          if (!currentPin) {
+            alert('Please generate a QR code session first.');
+            return;
+          }
+          
+          clearExistingTimer();
+          
+          const endTime = new Date();
+          endTime.setMinutes(endTime.getMinutes() + minutes);
+          
+          timerInterval = setInterval(() => {
+            const now = new Date();
+            const timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
+            
+            if (timeLeft <= 0) {
+              clearInterval(timerInterval);
+              const language = lecturerLanguageSelect?.value || 'en';
+              const currentTranslations = lecturerTranslations[language] || lecturerTranslations.en;
+              timerDisplay.textContent = currentTranslations['qr-session-expired'] || 'Session Expired';
+              qrDisplayArea.classList.add('expired');
+              document.getElementById('close-session-btn').style.display = 'inline-block';
+              return;
+            }
+            
+            const minutesLeft = Math.floor(timeLeft / 60);
+            const secondsLeft = timeLeft % 60;
+            timerDisplay.textContent = `${minutesLeft}:${secondsLeft.toString().padStart(2, '0')}`;
+          }, 1000);
+          
+          timerDisplay.textContent = `${minutes}:00`;
+        }
+
+        function clearExistingTimer() {
+          if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+          }
+        }
+
+        function closeCurrentSession() {
+          // This function is now handled by the QR Manager
+          if (qrManager) {
+            qrManager.closeCurrentSession();
+          }
+          
+          // Update course sessions
+          try {
+            const courseSessions = JSON.parse(localStorage.getItem('courseSessions') || '[]');
+            courseSessions.forEach(s => {
+              if (s.courseCode === selectedCourse && s.status === 'active') {
+                s.status = 'closed';
+                s.closedTime = new Date().toISOString();
+              }
+            });
+            localStorage.setItem('courseSessions', JSON.stringify(courseSessions));
+          } catch (e) {
+            console.error('Error updating course sessions:', e);
+          }
+          
+          alert('Session closed successfully.');
+        }
+
+        
+        // Enhanced session management functions
+        function broadcastSessionUpdate(session) {
+          // Broadcast to other tabs/windows using localStorage events
+          const event = new StorageEvent('storage', {
+            key: 'courseSessions',
+            newValue: localStorage.getItem('courseSessions'),
+            url: window.location.href
+          });
+          window.dispatchEvent(event);
+        }
+        
+        function notifyStudentsOfNewSession(courseCode, sessionId) {
+          // This could be enhanced with WebSockets or Server-Sent Events
+          // For now, we'll use localStorage events
+          const notification = {
+            type: 'newSession',
+            courseCode: courseCode,
+            sessionId: sessionId,
+            timestamp: new Date().toISOString()
+          };
+          
+          localStorage.setItem('sessionNotification', JSON.stringify(notification));
+          
+          // Clear notification after a short delay
+          setTimeout(() => {
+            localStorage.removeItem('sessionNotification');
+          }, 5000);
+        }
+        
+        // Helper function to get course name from code
+        function getCourseName(code) {
+          const courseNames = {
+            'HCI': 'Human Computer Interaction II',
+            'TEP': 'Technical Programming I',
+            'DES': 'Development Software II',
+            'INF': 'Information System II',
+            'DEV': 'Development Software I',
+            'ITS': 'Information Technology Skills I',
+            'IS': 'Information Systems I',
+            'SS': 'System Software I'
+          };
+          return courseNames[code] || code;
+        }
+        
+
+        // Timer functionality - now handled by QR Manager
+        window.setTimer = (minutes) => {
+          if (qrManager) {
+            qrManager.setTimer(minutes);
+          }
+        };
+
+        // Attendance storage and rendering
+        function loadSessions(){
+          try { sessionsStore = JSON.parse(localStorage.getItem('lecturerSessions')||'[]'); }
+          catch { sessionsStore = []; }
+        }
+        function persistSessions(){
+          localStorage.setItem('lecturerSessions', JSON.stringify(sessionsStore));
+        }
+        loadSessions();
+
+        const attendanceTbody = document.getElementById('attendance-tbody');
+        const attendanceRefreshBtn = document.getElementById('attendance-refresh-btn');
+        const attendanceDateFilter = document.getElementById('attendance-date-filter');
+        const attendanceCourseFilter = document.getElementById('attendance-course-filter');
+
+        function ensureCourseOptions(){
+          const existing = new Set(['all']);
+          Array.from(attendanceCourseFilter.options).forEach(o => existing.add(o.value));
+          sessionsStore.forEach(s => {
+            if (!existing.has(s.course)) {
+              const opt = document.createElement('option');
+              opt.value = s.course; opt.textContent = s.course;
+              attendanceCourseFilter.appendChild(opt);
+            }
+          });
+        }
+
+        function renderAttendance(){
+          loadSessions();
+          ensureCourseOptions();
+          const dateFilter = attendanceDateFilter?.value || '';
+          const courseFilter = attendanceCourseFilter?.value || 'all';
+          const filtered = sessionsStore.filter(s =>
+            (!dateFilter || s.date === dateFilter) &&
+            (courseFilter === 'all' || s.course === courseFilter)
+          );
+          attendanceTbody.innerHTML = '';
+          if (!filtered.length){
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 6; td.style.textAlign='center';
+            const language = lecturerLanguageSelect?.value || 'en';
+            const currentTranslations = lecturerTranslations[language] || lecturerTranslations.en;
+            td.textContent = currentTranslations['attendance-no-sessions'] || 'No sessions found.'; tr.appendChild(td);
+            attendanceTbody.appendChild(tr);
+            return;
+          }
+          for (const s of filtered){
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${s.id}</td>
+              <td>${s.course}</td>
+              <td>${s.date}</td>
+              <td>${s.time}</td>
+              <td><span class="status-badge ${s.status==='Open'?'open':'closed'}">${s.status}</span></td>
+              <td><button class="btn btn-small view-details" data-id="${s.id}" data-translate="qr-view-details">View Details</button></td>
+            `;
+            attendanceTbody.appendChild(tr);
+          }
+          // bind view buttons
+          attendanceTbody.querySelectorAll('.view-details').forEach(btn => {
+            btn.addEventListener('click', () => openAttendanceOverlay(btn.getAttribute('data-id')));
+          });
+        }
+
+        attendanceRefreshBtn?.addEventListener('click', renderAttendance);
+        attendanceDateFilter?.addEventListener('change', renderAttendance);
+        attendanceCourseFilter?.addEventListener('change', renderAttendance);
+
+        // Overlay for attendance details
+        function openAttendanceOverlay(sessionId){
+          const s = sessionsStore.find(x => x.id === sessionId);
+          if (!s) return;
+          let overlay = document.getElementById('attendance-overlay');
+          if (!overlay){
+            overlay = document.createElement('div');
+            overlay.id = 'attendance-overlay';
+            overlay.className = 'overlay-backdrop';
+            overlay.innerHTML = `
+              <div class="overlay-card">
+                <div class="overlay-header">
+                  <h4 data-translate="attendance-overlay-title">Session Details</h4>
+                  <button class="overlay-close" aria-label="Close">×</button>
+                </div>
+                <div class="overlay-content">
+                  <div class="details-grid">
+                    <div><span data-translate="attendance-overlay-session">Session:</span><strong id="ov-session"></strong></div>
+                    <div><span data-translate="attendance-overlay-course">Course:</span><strong id="ov-course"></strong></div>
+                    <div><span data-translate="attendance-overlay-date">Date:</span><strong id="ov-date"></strong></div>
+                    <div><span data-translate="attendance-overlay-time">Time:</span><strong id="ov-time"></strong></div>
+                    <div><span data-translate="attendance-overlay-status">Status:</span><strong id="ov-status"></strong></div>
+                  </div>
+                  <div class="mt-12">
+                    <h5 data-translate="attendance-overlay-attendees">Attendees</h5>
+                    <ul id="ov-attendees" class="attendees-list"><li data-translate="attendance-overlay-no-attendees">No attendees recorded.</li></ul>
+                  </div>
+                </div>
+                <div class="overlay-actions">
+                  <button class="btn" id="overlay-close-btn" data-translate="attendance-overlay-close">Close</button>
+                </div>
+              </div>`;
+            document.body.appendChild(overlay);
+            overlay.addEventListener('click', (e)=>{ if (e.target === overlay) closeAttendanceOverlay(); });
+            overlay.querySelector('.overlay-close').addEventListener('click', closeAttendanceOverlay);
+            overlay.querySelector('#overlay-close-btn').addEventListener('click', closeAttendanceOverlay);
+          }
+          overlay.querySelector('#ov-session').textContent = s.id;
+          overlay.querySelector('#ov-course').textContent = s.course;
+          overlay.querySelector('#ov-date').textContent = s.date;
+          overlay.querySelector('#ov-time').textContent = s.time;
+          overlay.querySelector('#ov-status').textContent = s.status;
+          const attendeesEl = overlay.querySelector('#ov-attendees');
+          attendeesEl.innerHTML = '<li>No attendees recorded.</li>';
+          overlay.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeAttendanceOverlay(){
+          const overlay = document.getElementById('attendance-overlay');
+          if (!overlay) return;
+          overlay.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+
+        // REPORTS
+        const reportFrom = document.getElementById('report-date-from');
+        const reportTo = document.getElementById('report-date-to');
+        const reportCourse = document.getElementById('report-course');
+        const reportGenerateBtn = document.getElementById('report-generate');
+        const reportTableBody = document.querySelector('#report-table tbody');
+        const reportSummary = document.getElementById('report-summary');
+        const downloadPdfBtn = document.getElementById('download-pdf');
+        const downloadDocxBtn = document.getElementById('download-docx');
+
+        function renderReportFilters(){
+          // ensure courses present in course dropdown
+          const keep = new Set(['all']);
+          Array.from(reportCourse.options).forEach(o => keep.add(o.value));
+          sessionsStore.forEach(s => {
+            if (!keep.has(s.course)){
+              const opt = document.createElement('option');
+              opt.value = s.course; opt.textContent = s.course;
+              reportCourse.appendChild(opt);
+            }
+          });
+        }
+
+        function generateReport(){
+          loadSessions();
+          const from = reportFrom?.value || '';
+          const to = reportTo?.value || '';
+          const course = reportCourse?.value || 'all';
+          const inRange = (d) => {
+            if (from && d < from) return false;
+            if (to && d > to) return false;
+            return true;
+          };
+          const data = sessionsStore.filter(s =>
+            inRange(s.date) && (course==='all' || s.course === course)
+          );
+          reportTableBody.innerHTML = '';
+          let openCount = 0, closedCount = 0;
+          data.forEach(s => {
+            if (s.status === 'Open') openCount++; else closedCount++;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${s.id}</td>
+              <td>${s.course}</td>
+              <td>${s.date}</td>
+              <td>${s.time}</td>
+              <td><span class="status-badge ${s.status==='Open'?'open':'closed'}">${s.status}</span></td>`;
+            reportTableBody.appendChild(tr);
+          });
+          reportSummary.innerHTML = `
+            <div class="details-grid" style="margin: 8px 0 12px;">
+              <div><span>Total Sessions</span><strong>${data.length}</strong></div>
+              <div><span>Open</span><strong>${openCount}</strong></div>
+              <div><span>Closed</span><strong>${closedCount}</strong></div>
+            </div>`;
+        }
+
+        reportGenerateBtn?.addEventListener('click', generateReport);
+
+        // Exports
+        downloadPdfBtn?.addEventListener('click', () => {
+          const card = document.getElementById('report-card');
+          if (!card) return;
+          const opt = {
+            margin:       10,
+            filename:     `attendance-report-${new Date().toISOString().slice(0,10)}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+          };
+          window.html2pdf().from(card).set(opt).save();
+        });
+
+        downloadDocxBtn?.addEventListener('click', async () => {
+          if (!window.docx) return;
+          const { Document, Packer, Paragraph, HeadingLevel, Table, TableRow, TableCell, TextRun, WidthType } = window.docx;
+          const rows = [];
+          // header
+          rows.push(new TableRow({ children: ['Session','Course','Date','Time','Status'].map(t => new TableCell({ children:[new Paragraph({ children:[new TextRun({ text:t, bold:true })] })] })) }));
+          // body
+          document.querySelectorAll('#report-table tbody tr').forEach(tr => {
+            const cells = Array.from(tr.children).map(td => new TableCell({ children:[new Paragraph(String(td.textContent||''))] }));
+            rows.push(new TableRow({ children: cells }));
+          });
+          const table = new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE } });
+          const doc = new Document({
+            sections: [{
+              children: [
+                new Paragraph({ text: 'Attendance Report', heading: HeadingLevel.HEADING_1 }),
+                new Paragraph({ text: `Generated: ${new Date().toLocaleString()}` }),
+                table
+              ]
+            }]
+          });
+          const blob = await Packer.toBlob(doc);
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = `attendance-report-${new Date().toISOString().slice(0,10)}.docx`;
+          a.click();
+          URL.revokeObjectURL(a.href);
+        });
+
+        
+        
+        
+        // Function to close current session manually
+        window.closeCurrentSession = function() {
+          if (confirm('Are you sure you want to close the current session?')) {
+            // Close the session properly
+            if (selectedCourse) {
+              try {
+                const courseSessions = JSON.parse(localStorage.getItem('courseSessions') || '[]');
+                const activeSession = courseSessions.find(s => s.status === 'active' && s.courseCode === selectedCourse);
+                if (activeSession) {
+                  activeSession.status = 'closed';
+                  activeSession.closedTime = new Date().toISOString();
+                  localStorage.setItem('courseSessions', JSON.stringify(courseSessions));
+                }
+              } catch (e) {
+                console.warn('Failed to update course session status:', e);
+              }
+            }
+            
+            // Also update the legacy sessions store
+            const openSession = sessionsStore.find(s => s.status === 'Open');
+            if (openSession) {
+              openSession.status = 'Closed';
+              persistSessions();
+            }
+            
+            // Mark QR as expired and clear display
+            markQrExpired();
+            
+            // Hide the session status indicator and close buttons
+            document.getElementById('session-status-indicator').style.display = 'none';
+            document.getElementById('close-session-btn').style.display = 'none';
+            document.getElementById('prominent-close-session-btn').style.display = 'none';
+            
+            // Refresh displays
+            displayRecentSessions();
+            if (document.getElementById('attendance')?.style.display === 'block') {
+              renderAttendance();
+            }
+            
+            // Show confirmation message
+            alert('Session has been closed successfully!');
+          }
+        };
+
+        // ENHANCED CALENDAR/SCHEDULER
+        const monthName = document.getElementById('calendar-month');
+        const prevBtn = document.getElementById('calendar-prev');
+        const nextBtn = document.getElementById('calendar-next');
+        const weekdaysEl = document.getElementById('calendar-weekdays');
+        const daysEl = document.getElementById('calendar-days');
+        const selectedDateLabel = document.getElementById('selected-date-label');
+        const selectedDateDisplay = document.getElementById('selected-date-display');
+        const eventsList = document.getElementById('events-list');
+        const exportEventsBtn = document.getElementById('export-events-btn');
+        
+        // Event form elements
+        const eventForm = document.getElementById('event-form');
+        const eventTitleInput = document.getElementById('event-title');
+        const eventTimeInput = document.getElementById('event-time');
+        const eventDurationInput = document.getElementById('event-duration');
+        const eventTypeInput = document.getElementById('event-type');
+        const eventLocationInput = document.getElementById('event-location');
+        const eventDescriptionInput = document.getElementById('event-description');
+        const eventRecurringInput = document.getElementById('event-recurring');
+        const recurringEndContainer = document.getElementById('recurring-end-container');
+        const eventRecurringEndInput = document.getElementById('event-recurring-end');
+        const clearEventBtn = document.getElementById('clear-event-btn');
+
+        const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        
+        // Enhanced event structure
+        class CalendarEvent {
+          constructor(data) {
+            this.id = data.id || this.generateId();
+            this.title = data.title;
+            this.time = data.time || '';
+            this.duration = data.duration || 60;
+            this.type = data.type || 'other';
+            this.location = data.location || '';
+            this.description = data.description || '';
+            this.recurring = data.recurring || 'none';
+            this.recurringEnd = data.recurringEnd || null;
+            this.createdAt = data.createdAt || new Date().toISOString();
+            this.updatedAt = data.updatedAt || new Date().toISOString();
+          }
+
+          generateId() {
+            return 'evt_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+          }
+
+          getEndTime() {
+            if (!this.time) return null;
+            const [hours, minutes] = this.time.split(':').map(Number);
+            const startDate = new Date();
+            startDate.setHours(hours, minutes, 0, 0);
+            return new Date(startDate.getTime() + this.duration * 60000);
+          }
+
+          getFormattedTime() {
+            if (!this.time) return 'All day';
+            const endTime = this.getEndTime();
+            if (endTime) {
+              return `${this.time} - ${endTime.toTimeString().slice(0, 5)}`;
+            }
+            return this.time;
+          }
+
+          getTypeColor() {
+            const colors = {
+              lecture: '#3498db',
+              tutorial: '#e74c3c',
+              lab: '#2ecc71',
+              meeting: '#f39c12',
+              exam: '#9b59b6',
+              other: '#95a5a6'
+            };
+            return colors[this.type] || colors.other;
+          }
+        }
+
+        // Calendar state
+        let calendarCursor = new Date();
+        calendarCursor.setDate(1);
+        let selectedDate = null;
+        let eventsStore = new Map();
+
+        // Utility functions using date-fns with fallbacks
+        function formatDate(date) {
+          try {
+            if (window.dateFns && window.dateFns.format) {
+              return window.dateFns.format(date, 'yyyy-MM-dd');
+            }
+          } catch (e) {
+            console.warn('date-fns format failed, using fallback:', e);
+          }
+          return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        function parseDate(dateStr) {
+          try {
+            if (window.dateFns && window.dateFns.parseISO) {
+              return window.dateFns.parseISO(dateStr);
+            }
+          } catch (e) {
+            console.warn('date-fns parseISO failed, using fallback:', e);
+          }
+          return new Date(dateStr);
+        }
+
+        function addDays(date, days) {
+          try {
+            if (window.dateFns && window.dateFns.addDays) {
+              return window.dateFns.addDays(date, days);
+            }
+          } catch (e) {
+            console.warn('date-fns addDays failed, using fallback:', e);
+          }
+          return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
+        }
+
+        function addWeeks(date, weeks) {
+          try {
+            if (window.dateFns && window.dateFns.addWeeks) {
+              return window.dateFns.addWeeks(date, weeks);
+            }
+          } catch (e) {
+            console.warn('date-fns addWeeks failed, using fallback:', e);
+          }
+          return new Date(date.getTime() + weeks * 7 * 24 * 60 * 60 * 1000);
+        }
+
+        function addMonths(date, months) {
+          try {
+            if (window.dateFns && window.dateFns.addMonths) {
+              return window.dateFns.addMonths(date, months);
+            }
+          } catch (e) {
+            console.warn('date-fns addMonths failed, using fallback:', e);
+          }
+          return new Date(date.getTime() + months * 30 * 24 * 60 * 60 * 1000);
+        }
+
+        function isSameDay(date1, date2) {
+          try {
+            if (window.dateFns && window.dateFns.isSameDay) {
+              return window.dateFns.isSameDay(date1, date2);
+            }
+          } catch (e) {
+            console.warn('date-fns isSameDay failed, using fallback:', e);
+          }
+          return date1.toDateString() === date2.toDateString();
+        }
+
+        function isToday(date) {
+          try {
+            if (window.dateFns && window.dateFns.isToday) {
+              return window.dateFns.isToday(date);
+            }
+          } catch (e) {
+            console.warn('date-fns isToday failed, using fallback:', e);
+          }
+          return isSameDay(date, new Date());
+        }
+
+        // Storage functions
+        function loadEvents() {
+          try {
+            // Load lecturer's own events
+            const stored = localStorage.getItem('lecturerCalendarEvents');
+            if (stored) {
+              const parsed = JSON.parse(stored);
+              eventsStore.clear();
+              Object.entries(parsed).forEach(([date, events]) => {
+                eventsStore.set(date, events.map(evt => new CalendarEvent(evt)));
+              });
+            }
+            
+            // Load admin events that are relevant for lecturers
+            try {
+              const adminEvents = localStorage.getItem('adminCalendarEvents');
+              if (adminEvents) {
+                const parsed = JSON.parse(adminEvents);
+                Object.entries(parsed).forEach(([date, events]) => {
+                  const relevantEvents = events.filter(evt => 
+                    evt.isAdminEvent && 
+                    (evt.type === 'Lecture' || evt.type === 'Tutorial' || evt.type === 'Exam' || evt.type === 'Meeting')
+                  );
+                  
+                  if (relevantEvents.length > 0) {
+                    const existingEvents = eventsStore.get(date) || [];
+                    const adminCalendarEvents = relevantEvents.map(evt => new CalendarEvent({
+                      id: 'admin_' + evt.id,
+                      title: evt.title || '',
+                      time: evt.time || '',
+                      duration: 60, // Default duration for admin events
+                      type: evt.type || 'Other',
+                      location: evt.location || '',
+                      description: evt.description || '',
+                      recurring: 'none',
+                      recurringEnd: null,
+                      course: evt.course || '',
+                      lecturer: evt.lecturer || '',
+                      notes: evt.notes || '',
+                      isAdminEvent: true,
+                      createdBy: 'admin',
+                      createdAt: evt.createdAt || new Date().toISOString()
+                    }));
+                    eventsStore.set(date, [...existingEvents, ...adminCalendarEvents]);
+                  }
+                });
+              }
+            } catch (e) {
+              console.warn('Failed to load admin events:', e);
+            }
+          } catch (e) {
+            console.error('Failed to load calendar events:', e);
+            eventsStore.clear();
+          }
+        }
+
+        function saveEvents() {
+          try {
+            const serialized = {};
+            eventsStore.forEach((events, date) => {
+              serialized[date] = events.map(evt => Object.assign({}, evt));
+            });
+            localStorage.setItem('lecturerCalendarEvents', JSON.stringify(serialized));
+          } catch (e) {
+            console.error('Failed to save calendar events:', e);
+          }
+        }
+
+        function getEventsForDate(date) {
+          const dateStr = formatDate(date);
+          return eventsStore.get(dateStr) || [];
+        }
+
+        function addEventToDate(date, event) {
+          const dateStr = formatDate(date);
+          if (!eventsStore.has(dateStr)) {
+            eventsStore.set(dateStr, []);
+          }
+          eventsStore.get(dateStr).push(event);
+          
+          // Handle recurring events
+          if (event.recurring !== 'none' && event.recurringEnd) {
+            createRecurringEvents(event, date, event.recurringEnd);
+          }
+          
+          saveEvents();
+        }
+
+        function createRecurringEvents(event, startDate, endDate) {
+          const end = parseDate(endDate);
+          let current = new Date(startDate);
+          
+          while (current <= end) {
+            switch (event.recurring) {
+              case 'daily':
+                current = addDays(current, 1);
+                break;
+              case 'weekly':
+                current = addWeeks(current, 1);
+                break;
+              case 'biweekly':
+                current = addWeeks(current, 2);
+                break;
+              case 'monthly':
+                current = addMonths(current, 1);
+                break;
+              default:
+                return;
+            }
+            
+            if (current <= end) {
+              const recurringEvent = new CalendarEvent({
+                ...event,
+                id: event.id + '_' + formatDate(current),
+                recurring: 'none', // Don't recur the recurring events
+                recurringEnd: null
+              });
+              addEventToDate(current, recurringEvent);
+            }
+          }
+        }
+
+        function removeEvent(eventId, date) {
+          const dateStr = formatDate(date);
+          const events = eventsStore.get(dateStr);
+          if (events) {
+            const index = events.findIndex(evt => evt.id === eventId);
+            if (index > -1) {
+              events.splice(index, 1);
+              if (events.length === 0) {
+                eventsStore.delete(dateStr);
+              }
+              saveEvents();
+              return true;
+            }
+          }
+          return false;
+        }
+
+        // Calendar rendering functions
+        function renderWeekdays() {
+          weekdaysEl.innerHTML = '';
+          
+          // Get current language and translations
+          const language = lecturerLanguageSelect?.value || 'en';
+          const currentTranslations = lecturerTranslations[language] || lecturerTranslations.en;
+          
+          // Map day index to translation key
+          const dayKeys = [
+            'day-sunday', 'day-monday', 'day-tuesday', 'day-wednesday',
+            'day-thursday', 'day-friday', 'day-saturday'
+          ];
+          
+          dayKeys.forEach(dayKey => {
+            const div = document.createElement('div');
+            div.className = 'day';
+            const translatedDay = currentTranslations[dayKey] || dayKey;
+            div.textContent = translatedDay;
+            weekdaysEl.appendChild(div);
+          });
+        }
+
+        function renderDays() {
+          daysEl.innerHTML = '';
+          const year = calendarCursor.getFullYear();
+          const month = calendarCursor.getMonth();
+          const firstDayIndex = new Date(year, month, 1).getDay();
+          const daysInMonth = new Date(year, month + 1, 0).getDate();
+          
+          // Leading blanks
+          for (let i = 0; i < firstDayIndex; i++) {
+            const div = document.createElement('div');
+            div.className = 'day prev';
+            daysEl.appendChild(div);
+          }
+
+          // Actual days
+          for (let d = 1; d <= daysInMonth; d++) {
+            const dateObj = new Date(year, month, d);
+            const div = document.createElement('div');
+            div.className = 'day';
+            div.textContent = String(d);
+            
+            // Today highlight
+            if (isToday(dateObj)) {
+              div.classList.add('today');
+            }
+            
+            // Event indicators
+            const events = getEventsForDate(dateObj);
+            if (events.length > 0) {
+              const eventIndicator = document.createElement('div');
+              eventIndicator.className = 'event-indicator';
+              
+              const adminEvents = events.filter(evt => evt.isAdminEvent);
+              const regularEvents = events.filter(evt => !evt.isAdminEvent);
+              
+              eventIndicator.innerHTML = `
+                <span class="event-count">${events.length}</span>
+                <div class="event-dots">
+                  ${events.slice(0, 3).map(evt => 
+                    `<span class="event-dot ${evt.isAdminEvent ? 'admin-dot' : ''}" style="background-color: ${evt.getTypeColor()}"></span>`
+                  ).join('')}
+                  ${events.length > 3 ? `<span class="event-dot-more">+${events.length - 3}</span>` : ''}
+                </div>
+                ${adminEvents.length > 0 ? `<div class="admin-indicator">A</div>` : ''}
+              `;
+              div.appendChild(eventIndicator);
+            }
+            
+            div.addEventListener('click', () => {
+              selectDate(dateObj);
+            });
+            
+            daysEl.appendChild(div);
+          }
+        }
+
+        function renderHeader() {
+          const y = calendarCursor.getFullYear();
+          const monthIndex = calendarCursor.getMonth();
+          
+          // Get current language and translations
+          const language = lecturerLanguageSelect?.value || 'en';
+          const currentTranslations = lecturerTranslations[language] || lecturerTranslations.en;
+          
+          // Map month index to translation key
+          const monthKeys = [
+            'month-january', 'month-february', 'month-march', 'month-april',
+            'month-may', 'month-june', 'month-july', 'month-august',
+            'month-september', 'month-october', 'month-november', 'month-december'
+          ];
+          
+          const translatedMonth = currentTranslations[monthKeys[monthIndex]] || monthKeys[monthIndex];
+          monthName.textContent = `${translatedMonth} ${y}`;
+        }
+
+        function selectDate(date) {
+          selectedDate = date;
+          const dateStr = formatDate(date);
+          selectedDateLabel.textContent = dateStr;
+          selectedDateDisplay.textContent = dateStr;
+          renderEvents();
+          exportEventsBtn.style.display = getEventsForDate(date).length > 0 ? 'inline-block' : 'none';
+        }
+
+        function renderEvents() {
+          if (!selectedDate) {
+            eventsList.innerHTML = '<li class="no-events">Select a date to view events</li>';
+            return;
+          }
+
+          const events = getEventsForDate(selectedDate);
+          eventsList.innerHTML = '';
+
+          if (events.length === 0) {
+            eventsList.innerHTML = '<li class="no-events">No events for this date</li>';
+            return;
+          }
+
+          // Sort events by time
+          events.sort((a, b) => {
+            if (!a.time && !b.time) return 0;
+            if (!a.time) return 1;
+            if (!b.time) return -1;
+            return a.time.localeCompare(b.time);
+          });
+
+          events.forEach(event => {
+            const li = document.createElement('li');
+            li.className = `event-item ${event.isAdminEvent ? 'admin-event' : ''}`;
+            li.innerHTML = `
+              <div class="event-header">
+                <span class="event-type-badge" style="background-color: ${event.getTypeColor()}">${event.type}</span>
+                ${event.isAdminEvent ? '<span class="admin-badge">Admin</span>' : ''}
+                <span class="event-time">${event.getFormattedTime()}</span>
+                ${!event.isAdminEvent ? `<button class="event-delete-btn" data-event-id="${event.id}" title="Delete event">×</button>` : ''}
+              </div>
+              <div class="event-title">${event.title}</div>
+              ${event.location ? `<div class="event-location"><i class="fas fa-map-marker-alt"></i> ${event.location}</div>` : ''}
+              ${event.description ? `<div class="event-description">${event.description}</div>` : ''}
+              ${event.course ? `<div class="event-course"><i class="fas fa-book"></i> Course: ${event.course}</div>` : ''}
+              ${event.lecturer ? `<div class="event-lecturer"><i class="fas fa-chalkboard-teacher"></i> Lecturer: ${event.lecturer}</div>` : ''}
+              ${event.notes ? `<div class="event-notes"><i class="fas fa-sticky-note"></i> ${event.notes}</div>` : ''}
+            `;
+            eventsList.appendChild(li);
+          });
+
+          // Bind delete buttons
+          eventsList.querySelectorAll('.event-delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const eventId = btn.getAttribute('data-event-id');
+              const language = lecturerLanguageSelect?.value || 'en';
+              const currentTranslations = lecturerTranslations[language] || lecturerTranslations.en;
+              const confirmMessage = currentTranslations['calendar-delete-confirm'] || 'Are you sure you want to delete this event?';
+              if (confirm(confirmMessage)) {
+                removeEvent(eventId, selectedDate);
+                renderEvents();
+                renderDays();
+                exportEventsBtn.style.display = getEventsForDate(selectedDate).length > 0 ? 'inline-block' : 'none';
+              }
+            });
+          });
+        }
+
+        // Function to refresh admin events
+        function refreshAdminEvents() {
+          loadEvents();
+          if (selectedDate) {
+            renderEvents();
+            renderDays();
+          }
+        }
+
+        // Event form handling
+        function handleEventSubmit(e) {
+          e.preventDefault();
+          
+          if (!selectedDate) {
+            alert('Please select a date on the calendar first.');
+            return;
+          }
+
+          const title = eventTitleInput.value.trim();
+          if (!title) {
+            alert('Please enter an event title.');
+            return;
+          }
+
+          const event = new CalendarEvent({
+            title: title,
+            time: eventTimeInput.value || '',
+            duration: parseInt(eventDurationInput.value) || 60,
+            type: eventTypeInput.value,
+            location: eventLocationInput.value.trim(),
+            description: eventDescriptionInput.value.trim(),
+            recurring: eventRecurringInput.value,
+            recurringEnd: eventRecurringEndInput.value || null
+          });
+
+          addEventToDate(selectedDate, event);
+          
+          // Clear form
+          eventForm.reset();
+          eventRecurringEndInput.style.display = 'none';
+          
+          // Refresh displays
+          renderEvents();
+          renderDays();
+          exportEventsBtn.style.display = 'inline-block';
+          
+          // Show success message
+          const language = lecturerLanguageSelect?.value || 'en';
+          const currentTranslations = lecturerTranslations[language] || lecturerTranslations.en;
+          const successMessage = currentTranslations['calendar-event-added'] || 'Event added successfully!';
+          showNotification(successMessage, 'success');
+        }
+
+        function handleRecurringChange() {
+          const isRecurring = eventRecurringInput.value !== 'none';
+          recurringEndContainer.style.display = isRecurring ? 'block' : 'none';
+          
+          if (isRecurring && !eventRecurringEndInput.value) {
+            // Set default end date to 3 months from now
+            const defaultEnd = new Date();
+            defaultEnd.setMonth(defaultEnd.getMonth() + 3);
+            eventRecurringEndInput.value = formatDate(defaultEnd);
+          }
+        }
+
+        function clearEventForm() {
+          eventForm.reset();
+          recurringEndContainer.style.display = 'none';
+        }
+
+        function exportEvents() {
+          if (!selectedDate) return;
+          
+          const events = getEventsForDate(selectedDate);
+          if (events.length === 0) return;
+          
+          const csvContent = [
+            ['Date', 'Time', 'Title', 'Type', 'Location', 'Description', 'Duration'],
+            ...events.map(evt => [
+              formatDate(selectedDate),
+              evt.getFormattedTime(),
+              evt.title,
+              evt.type,
+              evt.location || '',
+              evt.description || '',
+              evt.duration + ' minutes'
+            ])
+          ].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+          
+          const blob = new Blob([csvContent], { type: 'text/csv' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `events-${formatDate(selectedDate)}.csv`;
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+
+        function showNotification(message, type = 'info') {
+          // Simple notification system
+          const notification = document.createElement('div');
+          notification.className = `notification notification-${type}`;
+          notification.textContent = message;
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            notification.classList.add('show');
+          }, 100);
+          
+          setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+          }, 3000);
+        }
+
+        // Navigation functions
+        function goToPreviousMonth() {
+          calendarCursor.setMonth(calendarCursor.getMonth() - 1);
+          renderHeader();
+          renderDays();
+        }
+
+        function goToNextMonth() {
+          calendarCursor.setMonth(calendarCursor.getMonth() + 1);
+          renderHeader();
+          renderDays();
+        }
+
+        function goToToday() {
+          calendarCursor = new Date();
+          calendarCursor.setDate(1);
+          renderHeader();
+          renderDays();
+          selectDate(new Date());
+        }
+
+        // Event listeners
+        eventForm?.addEventListener('submit', handleEventSubmit);
+        eventRecurringInput?.addEventListener('change', handleRecurringChange);
+        clearEventBtn?.addEventListener('click', clearEventForm);
+        exportEventsBtn?.addEventListener('click', exportEvents);
+        
+        prevBtn?.addEventListener('click', goToPreviousMonth);
+        nextBtn?.addEventListener('click', goToNextMonth);
+        
+        // Add today button to calendar header
+        const todayBtn = document.createElement('div');
+        todayBtn.className = 'btn today-btn';
+        todayBtn.id = 'calendar-today-btn';
+        todayBtn.addEventListener('click', goToToday);
+        document.querySelector('.calendar .btns').appendChild(todayBtn);
+        
+        // Function to update today button text
+        function updateTodayButton() {
+          const language = lecturerLanguageSelect?.value || 'en';
+          const currentTranslations = lecturerTranslations[language] || lecturerTranslations.en;
+          const translatedToday = currentTranslations['calendar-today'] || 'Today';
+          todayBtn.textContent = translatedToday;
+        }
+        
+        // Set initial text
+        updateTodayButton();
+
+        // Initialize calendar
+        function initializeCalendar() {
+          try {
+            loadEvents();
+            renderHeader();
+            renderWeekdays();
+            renderDays();
+            selectDate(new Date());
+            
+            // Show success notification
+            const language = lecturerLanguageSelect?.value || 'en';
+            const currentTranslations = lecturerTranslations[language] || lecturerTranslations.en;
+            const successMessage = currentTranslations['calendar-loaded'] || 'Calendar loaded successfully!';
+            showNotification(successMessage, 'success');
+          } catch (error) {
+            console.error('Failed to initialize calendar:', error);
+            showNotification('Failed to load calendar. Using fallback mode.', 'error');
+            
+            // Fallback initialization
+            try {
+              loadEvents();
+              renderHeader();
+              renderWeekdays();
+              renderDays();
+              selectDate(new Date());
+            } catch (fallbackError) {
+              console.error('Fallback calendar initialization failed:', fallbackError);
+              showNotification('Calendar initialization failed completely.', 'error');
+            }
+          }
+        }
+        
+        // Initialize after a short delay to ensure DOM is ready
+        setTimeout(initializeCalendar, 100);
+        
+        // Set up periodic refresh of admin events (every 30 seconds)
+        setTimeout(() => {
+          setInterval(refreshAdminEvents, 30000);
+        }, 5000); // Start after 5 seconds
+        
+        // Mobile sidebar functionality
+        document.getElementById('sidebar-toggle').addEventListener('click', function() {
+          const sidebar = document.getElementById('sidebar2');
+          sidebar.classList.add('active');
+          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        });
+        
+        document.getElementById('sidebar-close').addEventListener('click', function() {
+          const sidebar = document.getElementById('sidebar2');
+          sidebar.classList.remove('active');
+          document.body.style.overflow = ''; // Restore scrolling
+        });
+        
+        // Close sidebar when clicking outside
+        document.getElementById('sidebar2').addEventListener('click', function(e) {
+          if (e.target === this) {
+            this.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        });
+        
+        // Close sidebar on escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            const sidebar = document.getElementById('sidebar2');
+            if (sidebar.classList.contains('active')) {
+              sidebar.classList.remove('active');
+              document.body.style.overflow = '';
+            }
+          }
+        });
+        
+        // Handle mobile navigation clicks
+        document.querySelectorAll('#sidebar2 .lecturer-nav-item[data-target]').forEach(navItem => {
+          navItem.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = navItem.getAttribute('data-target');
+            
+            // Hide all sections
+            sections.forEach((sec) => {
+              sec.style.display = 'none';
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(target);
+            if (targetSection) {
+              targetSection.style.display = 'block';
+            }
+            
+            // Update active state in both sidebars
+            document.querySelectorAll('.lecturer-nav-item').forEach(item => {
+              item.classList.remove('active');
+            });
+            navItem.classList.add('active');
+            
+            // Also update the main sidebar
+            const mainNavItem = document.querySelector(`.sidebar .lecturer-nav-item[data-target="${target}"]`);
+            if (mainNavItem) {
+              mainNavItem.classList.add('active');
+            }
+            
+            // Close mobile sidebar
+            const sidebar = document.getElementById('sidebar2');
+            sidebar.classList.remove('active');
+            document.body.style.overflow = '';
+          });
+        });
+        
+        // Handle external links in mobile sidebar
+        document.querySelectorAll('#sidebar2 .lecturer-nav-item[href]:not([data-target])').forEach(navItem => {
+          navItem.addEventListener('click', () => {
+            // Close mobile sidebar before navigation
+            const sidebar = document.getElementById('sidebar2');
+            sidebar.classList.remove('active');
+            document.body.style.overflow = '';
+          });
+        });
+        });
+
+        // Function to show specific sections (for quick actions)
+        window.showSection = function(sectionId) {
+          const sections = document.querySelectorAll('.section');
+          
+          // Hide all sections
+          sections.forEach((sec) => {
+            sec.style.display = 'none';
+          });
+          
+          // Show target section
+          const targetSection = document.getElementById(sectionId);
+          if (targetSection) {
+            targetSection.style.display = 'block';
+          }
+          
+          // Update active state in navigation
+          document.querySelectorAll('.lecturer-nav-item').forEach(item => {
+            item.classList.remove('active');
+          });
+          
+          const activeNavItem = document.querySelector(`.lecturer-nav-item[data-target="${sectionId}"]`);
+          if (activeNavItem) {
+            activeNavItem.classList.add('active');
+          }
+        };
+
+        // Theme toggle functionality
+        function initializeThemeToggle() {
+          const themeToggle = document.getElementById('theme-toggle');
+          const body = document.body;
+          
+          console.log('Theme toggle initialized');
+          console.log('Theme toggle button:', themeToggle);
+          console.log('Body element:', body);
+          
+          // Check for saved theme preference or default to light mode
+          const savedTheme = localStorage.getItem('theme') || 'light';
+          console.log('Saved theme:', savedTheme);
+          
+          if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            console.log('Dark mode applied on load');
+          }
+          
+          themeToggle.addEventListener('click', () => {
+            console.log('Theme toggle clicked');
+            body.classList.toggle('dark-mode');
+            console.log('Body classes after toggle:', body.className);
+            
+            if (body.classList.contains('dark-mode')) {
+              localStorage.setItem('theme', 'dark');
+              themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+              console.log('Dark mode activated');
+            } else {
+              localStorage.setItem('theme', 'light');
+              themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+              console.log('Light mode activated');
+            }
+          });
+        }
+        
+        document.addEventListener('DOMContentLoaded', initializeThemeToggle);
+
+    </script>
+
+    <!-- App modules -->
+    <script src="js/modules/auth.js"></script>
+    <script src="js/modules/qr-manager.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- Bridge for legacy inline handlers -->
+    <script>
+      window.setTimer = function(minutes) {
+        if (window.app && window.app.modules && window.app.modules.qr) {
+          window.app.modules.qr.setTimer(minutes);
+        }
+      };
+      window.closeCurrentSession = function() {
+        if (window.app && window.app.modules && window.app.modules.qr) {
+          window.app.modules.qr.closeCurrentSession();
+        }
+      };
+    </script>
+  </body>
+</html>

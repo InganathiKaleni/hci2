@@ -1,0 +1,12 @@
+/**
+ * EdUTEND System - [Module Name]
+ * 
+ * @fileoverview [Brief description of what this module does]
+ * @author Code Crafters
+ * @contributor Kay-M
+ * @license MIT License - https://opensource.org/licenses/MIT
+ * @copyright Copyright (c) 2025 Kay-M
+ */
+
+// Use this template for all new JavaScript files in the project
+// Replace [Module Name] and [Brief description] with appropriate values

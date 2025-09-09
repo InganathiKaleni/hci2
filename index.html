@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Crafters Edu-Tend System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+
+        <form id="signUpForm" class="glass-container">
+            <h2>Sign-Up</h2>
+            <label for="signUpName">Name</label>
+            <input type="text" id="signUpName" required>
+            <label for="signUpEmail">Email</label>
+            <input type="email" id="signUpEmail" required>
+            <label for="signUpPassword">Password</label>
+            <input type="password" id="signUpPassword" required>
+            <label for="signUpRole">User Role</label>
+            <select id="signUpRole" required>
+                <option value="">Select User Role</option>
+                <option value="Admin">Administrator</option>
+                <option value="Lecturer">Lecturer</option>
+                <option value="Student">Student</option>
+            </select>
+            <button type="submit">Sign Up</button>
+            <div class="toggle-link">
+                Already have an account? <button id="showLogin" type="button">Login</button>
+            </div>
+        </form>
+
+        <form id="loginForm" class="glass-container">
+            <h2>Login</h2>
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" required>
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" required>
+            <label for="loginRole">User Role</label>
+            <select id="loginRole" required>
+                <option value="">Select User Role</option>
+                <option value="Admin">Administrator</option>
+                <option value="Lecturer">Lecturer</option>
+                <option value="Student">Student</option>
+            </select>
+            <button type="submit">Login</button>
+            <div class="toggle-link">
+                Don't have an account? <button id="showSignUp" type="button">Sign Up</button>
+            </div>
+        </form>
+
+        <footer>
+            <p>&copy; 2025/26 Code Crafters Edu-Tend System. All rights reserved by Kay-M.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

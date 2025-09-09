@@ -1,0 +1,247 @@
+/* Notification Components */
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    z-index: 10000;
+    max-width: 300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification-success {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+}
+
+.notification-error {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+.notification-warning {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+}
+
+.notification-info {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+}
+
+.notification-action {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    margin-right: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.notification-action:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.notification-action:last-child {
+    margin-right: 0;
+}
+
+/* App-level notifications */
+.app-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 500;
+    z-index: 10000;
+    max-width: 350px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.app-notification.show {
+    transform: translateX(0);
+}
+
+/* Toast notifications */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-left: 4px solid;
+    min-width: 300px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.toast.show {
+    transform: translateX(0);
+}
+
+.toast-success {
+    border-left-color: #2ecc71;
+}
+
+.toast-error {
+    border-left-color: #e74c3c;
+}
+
+.toast-warning {
+    border-left-color: #f39c12;
+}
+
+.toast-info {
+    border-left-color: #3498db;
+}
+
+.toast-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.toast-title {
+    font-weight: 600;
+    color: #333;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.toast-close:hover {
+    background-color: #f0f0f0;
+}
+
+.toast-message {
+    color: #666;
+    line-height: 1.4;
+}
+
+/* Progress bar for timed notifications */
+.notification-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 0 0 8px 8px;
+    transition: width linear;
+}
+
+/* Responsive notifications */
+@media (max-width: 768px) {
+    .notification,
+    .app-notification {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        transform: translateY(-100%);
+    }
+    
+    .notification.show,
+    .app-notification.show {
+        transform: translateY(0);
+    }
+    
+    .toast {
+        min-width: auto;
+        margin: 0 10px;
+    }
+}
+
+/* Animation keyframes */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInTop {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .toast {
+        background: #2c3e50;
+        color: white;
+    }
+    
+    .toast-title {
+        color: white;
+    }
+    
+    .toast-message {
+        color: #bdc3c7;
+    }
+    
+    .toast-close {
+        color: #95a5a6;
+    }
+    
+    .toast-close:hover {
+        background-color: #34495e;
+    }
+}

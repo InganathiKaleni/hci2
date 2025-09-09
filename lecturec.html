@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edutend - Module Management</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="container">
+      <nav>
+        <div class="nav-left">
+          <strong>EDUTEND</strong>
+        </div>
+        <div class="nav-right">
+          <a href="#" class="toggle" id="menu-toggle">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="32px"
+              width="42px"
+              viewBox="0 -960 960 960"
+              fill="#fff"
+            >
+              <g transform="scale(-1, 1) translate(-960, 0)">
+                <path d="M180-390v-0h450v60H180Zm0-190v-40h600v60H180Z" />
+              </g>
+            </svg>
+            <div class="profile">
+              <h1>IN</h1>
+            </div>
+          </a>
+        </div>
+      </nav>
+  </header>
+
+    <main class="container">
+    <div class="hero-text">
+      <h1>Don't settle for ordinary.</h1>
+      <p>Easily manage your studies anywhere.</p>
+    </div>
+
+
+    <div class="card-grid">
+      <div class="card yellow" data-module-code="HCI" data-module-name="HUMAN COMPUTER INTERACTION II">
+        <div><h2>HUMAN COMPUTER INTERACTION II</h2><p>HCI</p></div>
+        <div class="course-status" id="course-status-HCI">
+          <span class="status-indicator">No active session</span>
+        </div>
+        <div class="btn-container">
+          <button class="create-class-btn" onclick="openCreateClassOverlay('HCI', 'HUMAN COMPUTER INTERACTION II')">Create Class</button>
+          <button class="view-details-btn" onclick="openDetailsOverlay('HCI', 'HUMAN COMPUTER INTERACTION II')">View Details</button>
+          <a href="#" class="view-live-session-btn" id="live-session-HCI" style="display: none;" onclick="navigateToLiveSession('HCI')">View Live Session</a>
+        </div>
+      </div>
+      <div class="card sky" data-module-code="TEP" data-module-name="TECHNICAL PROGRAMMING I">
+        <div><h2>TECHNICAL PROGRAMMING I</h2><p>TEP</p></div>
+        <div class="course-status" id="course-status-TEP">
+          <span class="status-indicator">No active session</span>
+        </div>
+        <div class="btn-container">
+          <button class="create-class-btn" onclick="openCreateClassOverlay('TEP', 'TECHNICAL PROGRAMMING I')">Create Class</button>
+          <button class="view-details-btn" onclick="openDetailsOverlay('TEP', 'TECHNICAL PROGRAMMING I')">View Details</button>
+          <a href="#" class="view-live-session-btn" id="live-session-TEP" style="display: none;" onclick="navigateToLiveSession('TEP')">View Live Session</a>
+        </div>
+      </div>
+      <div class="card blue" data-module-code="DES" data-module-name="DEVELOPMENT SOFTWARE II">
+        <div><h2>DEVELOPMENT SOFTWARE II</h2><p>DES</p></div>
+        <div class="course-status" id="course-status-DES">
+          <span class="status-indicator">No active session</span>
+        </div>
+        <div class="btn-container">
+          <button class="create-class-btn" onclick="openCreateClassOverlay('DES', 'DEVELOPMENT SOFTWARE II')">Create Class</button>
+          <button class="view-details-btn" onclick="openDetailsOverlay('DES', 'DEVELOPMENT SOFTWARE II')">View Details</button>
+          <a href="#" class="view-live-session-btn" id="live-session-DES" style="display: none;" onclick="navigateToLiveSession('DES')">View Live Session</a>
+        </div>
+      </div>
+      <div class="card purple" data-module-code="INF" data-module-name="INFORMATION SYSTEM II">
+        <div><h2>INFORMATION SYSTEM II</h2><p>INF</p></div>
+        <div class="course-status" id="course-status-INF">
+          <span class="status-indicator">No active session</span>
+        </div>
+        <div class="btn-container">
+          <button class="create-class-btn" onclick="openCreateClassOverlay('INF', 'INFORMATION SYSTEM II')">Create Class</button>
+          <button class="view-details-btn" onclick="openDetailsOverlay('INF', 'INFORMATION SYSTEM II')">View Details</button>
+          <a href="#" class="view-live-session-btn" id="live-session-INF" style="display: none;" onclick="navigateToLiveSession('INF')">View Live Session</a>
+        </div>
+      </div>
+      <div class="card sage" data-module-code="DEV" data-module-name="DEVELOPMENT SOFTWARE I">
+        <div><h2>DEVELOPMENT SOFTWARE I</h2><p>DEV</p></div>
+        <div class="course-status" id="course-status-DEV">
+          <span class="status-indicator">No active session</span>
+        </div>
+        <div class="btn-container">
+          <button class="create-class-btn" onclick="openCreateClassOverlay('DEV', 'DEVELOPMENT SOFTWARE I')">Create Class</button>
+          <button class="view-details-btn" onclick="openDetailsOverlay('DEV', 'DEVELOPMENT SOFTWARE I')">View Details</button>
+          <a href="#" class="view-live-session-btn" id="live-session-DEV" style="display: none;" onclick="navigateToLiveSession('DEV')">View Live Session</a>
+        </div>
+      </div>
+      <div class="card grey" data-module-code="ITS" data-module-name="INFOTMATION TECHNOLOGY SKILLS I">
+        <div><h2>INFORMATION TECHNICAL SKILLS I</h2><p>ITS</p></div>
+        <div class="course-status" id="course-status-ITS">
+          <span class="status-indicator">No active session</span>
+        </div>
+        <div class="btn-container">
+          <button class="create-class-btn" onclick="openCreateClassOverlay('ITS', 'INFOTMATION TECHNOLOGY SKILLS I')">Create Class</button>
+          <button class="view-details-btn" onclick="openDetailsOverlay('ITS', 'INFOTMATION TECHNOLOGY SKILLS I')">View Details</button>
+          <a href="#" class="view-live-session-btn" id="live-session-ITS" style="display: none;" onclick="navigateToLiveSession('ITS')">View Live Session</a>
+        </div>
+      </div>
+      <div class="card dark-blue" data-module-code="IS" data-module-name="INFORMATION SYSTEMS I">
+        <div><h2>INFORMATION SYSTEMS I</h2><p>IS</p></div>
+        <div class="course-status" id="course-status-IS">
+          <span class="status-indicator">No active session</span>
+        </div>
+        <div class="btn-container">
+          <button class="create-class-btn" onclick="openCreateClassOverlay('IS', 'INFORMATION SYSTEMS I')">Create Class</button>
+          <button class="view-details-btn" onclick="openDetailsOverlay('IS', 'INFORMATION SYSTEMS I')">View Details</button>
+          <a href="#" class="view-live-session-btn" id="live-session-IS" style="display: none;" onclick="navigateToLiveSession('IS')">View Live Session</a>
+        </div>
+      </div>
+      <div class="card lavender" data-module-code="SS" data-module-name="SYSTEM SOFTWARE I">
+        <div><h2>SYSTEM SOFTWARE I</h2><p>SS</p></div>
+        <div class="course-status" id="course-status-SS">
+          <span class="status-indicator">No active session</span>
+        </div>
+        <div class="btn-container">
+          <button class="create-class-btn" onclick="openCreateClassOverlay('SS', 'SYSTEM SOFTWARE I')">Create Class</button>
+          <button class="view-details-btn" onclick="openDetailsOverlay('SS', 'SYSTEM SOFTWARE I')">View Details</button>
+          <a href="#" class="view-live-session-btn" id="live-session-SS" style="display: none;" onclick="navigateToLiveSession('SS')">View Live Session</a>
+        </div>
+      </div>
+      <!-- other cards here -->
+    </div>
+
+    <!-- QR Code/Create Session Overlay -->
+    <div id="qr-overlay" class="overlay">
+      <div class="overlay-content">
+        <button class="btn close-overlay-btn" onclick="closeOverlay('qr-overlay')">Close</button>
+        <span class="close-btn" onclick="closeOverlay('qr-overlay')">&times;</span>
+        <h2 id="qr-overlay-title">Create New Session</h2>
+        
+        <!-- Course Information Display -->
+        <div class="course-info" id="course-info">
+          <h3 id="selected-course-name">Course Name</h3>
+          <p id="selected-course-code">Course Code</p>
+        </div>
+        
+        <button class="btn" id="generate-qr-btn" onclick="generateNewSession()">Generate PIN & QR Code</button>
+        <div>
+          <p>Override default 15 min timer:</p>
+          <button class="btn" onclick="setTimer(5)">5 min</button>
+          <button class="btn" onclick="setTimer(10)">10 min</button>
+          <button class="btn" onclick="setTimer(15)">15 min</button>
+        </div>
+        <div id="qr-display-area">
+          <div id="qrcode"></div>
+          <p id="pin-display"></p>
+          <p id="timer-display"></p>
+          <div class="session-info" id="session-info">
+            <p><strong>Course:</strong> <span id="session-course-name">-</span></p>
+            <p><strong>Code:</strong> <span id="session-course-code">-</span></p>
+            <p><strong>Session ID:</strong> <span id="session-id">-</span></p>
+            <p><strong>Created:</strong> <span id="session-created">-</span></p>
+          </div>
+          <button class="btn" id="close-session-btn" onclick="closeCurrentSession()" style="margin-top: 1rem; background-color: #dc3545;">Close Session</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details Overlay -->
+    <div id="details-overlay" class="overlay">
+      <div class="overlay-content">
+        <h2 id="details-overlay-title">Module Details</h2>
+        <div id="session-list-view">
+          <h3>Course Sessions</h3>
+          <div class="session-filters">
+            <label for="session-status-filter" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">Filter sessions by status</label>
+            <select id="session-status-filter">
+              <option value="all">All Sessions</option>
+              <option value="active">Active Sessions</option>
+              <option value="closed">Closed Sessions</option>
+            </select>
+            <button class="btn" id="refresh-sessions-btn">Refresh</button>
+          </div>
+          <div id="course-sessions-list">
+            <p>Loading sessions...</p>
+          </div>
+        </div>
+        <div id="submission-detail-view" style="display: none;">
+          <button id="back-to-sessions-btn" class="btn">&larr; Back</button>
+          <h3 id="submission-detail-title">Session Attendance</h3>
+          <div class="session-info">
+            <p><strong>Session ID:</strong> <span id="detail-session-id">-</span></p>
+            <p><strong>Course:</strong> <span id="detail-course-name">-</span></p>
+            <p><strong>PIN:</strong> <span id="detail-pin">-</span></p>
+            <p><strong>Status:</strong> <span id="detail-status">-</span></p>
+          </div>
+          <div class="table-responsive">
+            <table class="attendance-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Student Number</th>
+                  <th>Timestamp</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="submission-detail-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="container">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+ <script type="module" src="/index.js"></script>
+ <script type="module" src="/sub.js"></script>
+
+<script>
+// Function to navigate to live session in Lecturer.html
+function navigateToLiveSession(courseCode) {
+    // Store the selected course for Lecturer.html to use
+    localStorage.setItem('selectedCourseForLiveSession', JSON.stringify({
+        code: courseCode,
+        timestamp: new Date().toISOString()
+    }));
+    
+    // Navigate to Lecturer.html with QR code section active
+    window.location.href = 'Lecturer.html#qrcode';
+}
+
+// Function to open Create Class overlay
+function openCreateClassOverlay(courseCode, courseName) {
+    // Store course information for the overlay
+    localStorage.setItem('currentCourseForSession', JSON.stringify({
+        code: courseCode,
+        name: courseName
+    }));
+    
+    // Update the overlay with course information
+    document.getElementById('selected-course-name').textContent = courseName;
+    document.getElementById('selected-course-code').textContent = courseCode;
+    
+    // Clear any previous QR code
+    const qrDisplayArea = document.getElementById('qr-display-area');
+    const pinDisplay = document.getElementById('pin-display');
+    const timerDisplay = document.getElementById('timer-display');
+    
+    if (qrDisplayArea) qrDisplayArea.style.display = 'none';
+    if (pinDisplay) pinDisplay.textContent = '';
+    if (timerDisplay) timerDisplay.textContent = '';
+    
+    // Open the QR overlay
+    document.getElementById('qr-overlay').style.display = 'flex';
+}
+
+// Function to open Details overlay
+function openDetailsOverlay(courseCode, courseName) {
+    // Store course information for the overlay
+    localStorage.setItem('currentCourseForDetails', JSON.stringify({
+        code: courseCode,
+        name: courseName
+    }));
+    
+    // Update the overlay title
+    document.getElementById('details-overlay-title').textContent = courseName + ' (' + courseCode + ')';
+    
+    // Load course sessions for this course
+    if (typeof loadCourseSessions === 'function') {
+        loadCourseSessions(courseCode);
+    }
+    
+    // Open the details overlay
+    document.getElementById('details-overlay').style.display = 'flex';
+}
+
+// Function to generate new session (PIN & QR Code)
+function generateNewSession() {
+    // Get the current course information from localStorage
+    const currentCourse = JSON.parse(localStorage.getItem('currentCourseForSession') || '{}');
+    
+    if (!currentCourse.code || !currentCourse.name) {
+        alert('No course selected. Please try again.');
+        return;
+    }
+
+    // Generate a random 6-digit PIN
+    const pin = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    // Display the PIN
+    const pinDisplay = document.getElementById('pin-display');
+    if (pinDisplay) {
+        pinDisplay.textContent = `PIN: ${pin}`;
+    }
+
+    // Generate QR Code using the QRCode library - Check for existing QR first
+    const qrcodeContainer = document.getElementById('qrcode');
+    if (qrcodeContainer) {
+        // Clear any existing QR code to prevent duplicates
+        qrcodeContainer.innerHTML = '';
+        
+        // Only create QR if container is empty and QR Manager isn't handling it
+        if (typeof QRCode !== 'undefined' && qrcodeContainer.children.length === 0) {
+            new QRCode(qrcodeContainer, {
+                text: pin,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H,
+            });
+        } else if (typeof QRCode === 'undefined') {
+            qrcodeContainer.innerHTML = '<p>QR Code library not loaded</p>';
+        }
+    }
+
+    // Show the QR display area
+    const qrDisplayArea = document.getElementById('qr-display-area');
+    if (qrDisplayArea) {
+        qrDisplayArea.style.display = 'block';
+    }
+    
+    // Update session information display
+    const now = new Date();
+    const sessionId = `S${currentCourse.code}${now.getTime()}`;
+    
+    const sessionCourseName = document.getElementById('session-course-name');
+    const sessionCourseCode = document.getElementById('session-course-code');
+    const sessionIdElement = document.getElementById('session-id');
+    const sessionCreated = document.getElementById('session-created');
+    
+    if (sessionCourseName) sessionCourseName.textContent = currentCourse.name;
+    if (sessionCourseCode) sessionCourseCode.textContent = currentCourse.code;
+    if (sessionIdElement) sessionIdElement.textContent = sessionId;
+    if (sessionCreated) sessionCreated.textContent = now.toLocaleString();
+    
+    // Store session in localStorage for tracking
+    const session = {
+        id: sessionId,
+        courseName: currentCourse.name,
+        courseCode: currentCourse.code,
+        pin: pin,
+        created: now.toISOString(),
+        createdTime: now.toISOString(), // Add for compatibility
+        expiresAt: null, // Add expiresAt property for student validation
+        status: 'active'
+    };
+    
+    // Save to localStorage
+    const sessions = JSON.parse(localStorage.getItem('courseSessions') || '[]');
+    sessions.unshift(session);
+    localStorage.setItem('courseSessions', JSON.stringify(sessions));
+    
+    // Update course status to show active session
+    updateCourseStatus(currentCourse.code, 'active', pin);
+    
+    console.log("Generated PIN:", pin, "for course:", currentCourse.name);
+}
+
+// Function to update course status
+function updateCourseStatus(courseCode, status, pin = null) {
+    const statusElement = document.getElementById(`course-status-${courseCode}`);
+    const liveSessionBtn = document.getElementById(`live-session-${courseCode}`);
+    
+    if (statusElement && liveSessionBtn) {
+        if (status === 'active') {
+            statusElement.innerHTML = '<span class="status-indicator active">Active Session</span>';
+            liveSessionBtn.style.display = 'inline-block';
+            liveSessionBtn.textContent = `Live: ${pin}`;
+        } else {
+            statusElement.innerHTML = '<span class="status-indicator">No active session</span>';
+            liveSessionBtn.style.display = 'none';
+        }
+    }
+}
+
+// Function to close current session
+function closeCurrentSession() {
+    const currentCourse = JSON.parse(localStorage.getItem('currentCourseForSession') || '{}');
+    
+    if (!currentCourse.code) {
+        alert('No active session to close.');
+        return;
+    }
+    
+    // Update session status in localStorage
+    const sessions = JSON.parse(localStorage.getItem('courseSessions') || '[]');
+    const activeSession = sessions.find(s => s.courseCode === currentCourse.code && s.status === 'active');
+    
+    if (activeSession) {
+        activeSession.status = 'closed';
+        activeSession.closedAt = new Date().toISOString();
+        localStorage.setItem('courseSessions', JSON.stringify(sessions));
+        
+        // Update course status
+        updateCourseStatus(currentCourse.code, 'closed');
+        
+        // Clear the QR display area
+        const qrDisplayArea = document.getElementById('qr-display-area');
+        if (qrDisplayArea) {
+            qrDisplayArea.style.display = 'none';
+        }
+        
+        // Clear PIN and timer display
+        const pinDisplay = document.getElementById('pin-display');
+        const timerDisplay = document.getElementById('timer-display');
+        if (pinDisplay) pinDisplay.textContent = '';
+        if (timerDisplay) timerDisplay.textContent = '';
+        
+        // Clear QR code
+        const qrcodeContainer = document.getElementById('qrcode');
+        if (qrcodeContainer) {
+            qrcodeContainer.innerHTML = '';
+        }
+        
+        alert('Session closed successfully.');
+    }
+}
+
+// Timer functionality
+let currentTimer = null;
+
+function setTimer(minutes) {
+    // Clear any existing timer
+    if (currentTimer) {
+        clearInterval(currentTimer);
+    }
+    
+    const timerDisplay = document.getElementById('timer-display');
+    if (!timerDisplay) return;
+    
+    let seconds = minutes * 60;
+    
+    // Update timer display immediately
+    const min = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+    timerDisplay.textContent = `Expires in: ${min}:${sec < 10 ? '0' : ''}${sec}`;
+    
+    // Start countdown
+    currentTimer = setInterval(() => {
+        seconds--;
+        const min = Math.floor(seconds / 60);
+        const sec = seconds % 60;
+        timerDisplay.textContent = `Expires in: ${min}:${sec < 10 ? '0' : ''}${sec}`;
+        
+        if (seconds <= 0) {
+            clearInterval(currentTimer);
+            currentTimer = null;
+            timerDisplay.textContent = "Expired!";
+            
+            setTimeout(() => {
+                closeCurrentSession();
+            }, 2000);
+        }
+    }, 1000);
+}
+
+function closeOverlay(overlayId) {
+    document.getElementById(overlayId).style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.overlay').forEach(overlay => {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                overlay.style.display = 'none';
+            }
+        });
+    });
+    
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.overlay').forEach(overlay => {
+                if (overlay.style.display === 'flex') {
+                    overlay.style.display = 'none';
+                }
+            });
+        }
+    });
+});
+</script>
+
+
+</body>
+</html>

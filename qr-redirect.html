@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Attendance - EdUTEND</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .card { max-width: 560px; margin: 40px auto; padding: 24px; background: #fff; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+      .muted { color: #666; }
+      .row { display: flex; gap: 12px; }
+      .row > * { flex: 1; }
+      .btn-primary { background: #007bff; color: #fff; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; }
+      .btn-secondary { background: #6c757d; color: #fff; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; }
+      .status { margin-top: 12px; font-weight: 600; }
+      .status.success { color: #2ecc71; }
+      .status.error { color: #e74c3c; }
+      .field { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
+      .field input { padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; }
+      .info { background: #f8f9fa; border: 1px solid #e9ecef; padding: 12px; border-radius: 8px; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Sign Attendance</h2>
+      <p class="muted" id="session-subtitle">Loading session...</p>
+
+      <div class="info" id="session-info" style="display:none">
+        <div class="row">
+          <div><strong>Course</strong><div id="course-name">-</div></div>
+          <div><strong>Code</strong><div id="course-code">-</div></div>
+        </div>
+        <div class="row">
+          <div><strong>Session ID</strong><div id="session-id">-</div></div>
+          <div><strong>PIN</strong><div id="session-pin">-</div></div>
+        </div>
+        <div class="row">
+          <div><strong>Status</strong><div id="session-status">-</div></div>
+          <div><strong>Expires</strong><div id="session-expires">-</div></div>
+        </div>
+      </div>
+
+      <div id="auth-cta" style="display:none; margin-top:16px;">
+        <p class="muted">Please login as a Student to proceed.</p>
+        <div class="row">
+          <button class="btn-secondary" id="go-login">Go to Login</button>
+          <button class="btn-secondary" id="go-student">Open Student Dashboard</button>
+        </div>
+      </div>
+
+      <div id="sign-form" style="display:none; margin-top:16px;">
+        <div class="field"><label>Student Name</label><input id="student-name" /></div>
+        <div class="field"><label>Student ID</label><input id="student-id" /></div>
+        <div class="row" style="margin-top:8px;">
+          <button class="btn-primary" id="sign-now">Sign Register</button>
+          <button class="btn-secondary" id="cancel">Cancel</button>
+        </div>
+        <div id="sign-status" class="status"></div>
+      </div>
+    </div>
+
+    <script>
+      function qs(param){ return new URLSearchParams(location.search).get(param) || '' }
+      function loadActiveSession(sessionId, pin){
+        try {
+          const sessions = JSON.parse(localStorage.getItem('courseSessions') || '[]');
+          let s = null;
+          if (sessionId) s = sessions.find(x => (x.sessionId || x.id) === sessionId);
+          if (!s && pin) s = sessions.find(x => x.pin === pin && x.status === 'active');
+          return s || null;
+        } catch { return null }
+      }
+
+      function formatExpiry(iso){
+        if (!iso) return 'Not set';
+        const exp = new Date(iso), now = new Date();
+        if (exp <= now) return 'Expired';
+        const mins = Math.ceil((exp - now) / 60000);
+        return mins + ' min left';
+      }
+
+      const sessionId = qs('sessionId');
+      const course = qs('course');
+      const pin = qs('pin');
+      const courseSessions = JSON.parse(localStorage.getItem('courseSessions') || '[]');
+      let session = loadActiveSession(sessionId, pin);
+
+      const subtitle = document.getElementById('session-subtitle');
+      const info = document.getElementById('session-info');
+      const signForm = document.getElementById('sign-form');
+      const authCta = document.getElementById('auth-cta');
+
+      if (!session) {
+        subtitle.textContent = 'Session not found or already closed.';
+      } else {
+        document.getElementById('course-name').textContent = session.courseName || session.courseCode || course || '-';
+        document.getElementById('course-code').textContent = session.courseCode || course || '-';
+        document.getElementById('session-id').textContent = session.sessionId || session.id;
+        document.getElementById('session-pin').textContent = session.pin || pin || '-';
+        document.getElementById('session-status').textContent = session.status;
+        document.getElementById('session-expires').textContent = formatExpiry(session.expiresAt || session.expiryTime);
+        subtitle.textContent = 'Confirm your details to sign the register.';
+        info.style.display = 'block';
+      }
+
+      const currentUserRaw = localStorage.getItem('currentUser');
+      let currentUser = null;
+      try { currentUser = currentUserRaw ? JSON.parse(currentUserRaw) : null; } catch {}
+
+      const fillFromUser = () => {
+        const n = document.getElementById('student-name');
+        const i = document.getElementById('student-id');
+        if (currentUser) {
+          n.value = currentUser.name || '';
+          i.value = currentUser.studentId || '';
+        }
+      };
+
+      const isStudent = currentUser && (currentUser.role === 'Student' || currentUser.role === 'student');
+      if (!isStudent) {
+        authCta.style.display = 'block';
+        document.getElementById('go-login').onclick = () => {
+          // Preserve redirect after login
+          localStorage.setItem('postLoginRedirect', location.href);
+          location.href = 'index.html';
+        };
+        document.getElementById('go-student').onclick = () => {
+          location.href = 'Student.html';
+        };
+      } else if (session) {
+        signForm.style.display = 'block';
+        fillFromUser();
+      }
+
+      document.getElementById('cancel').onclick = () => { window.close() || (location.href = 'Student.html'); };
+
+      document.getElementById('sign-now').onclick = () => {
+        const name = document.getElementById('student-name').value.trim();
+        const sid = document.getElementById('student-id').value.trim() || (currentUser && (currentUser.studentId || currentUser.id));
+        const statusEl = document.getElementById('sign-status');
+        statusEl.className = 'status';
+
+        if (!session) { statusEl.textContent = 'No active session.'; statusEl.classList.add('error'); return; }
+        if (!name || !sid) { statusEl.textContent = 'Name and Student ID required.'; statusEl.classList.add('error'); return; }
+
+        // Validate expiry
+        const expIso = session.expiresAt || session.expiryTime;
+        if (expIso && new Date(expIso) < new Date()) {
+          statusEl.textContent = 'Session expired.'; statusEl.classList.add('error'); return;
+        }
+
+        // Save to student's attendance records
+        const scans = JSON.parse(localStorage.getItem('studentScans') || '[]');
+        const record = {
+          id: 'scan_' + Date.now(),
+          date: new Date().toISOString().slice(0,10),
+          time: new Date().toLocaleTimeString(),
+          pin: session.pin,
+          course: session.courseName || session.courseCode,
+          courseCode: session.courseCode,
+          lecturer: session.lecturerName || 'Lecturer',
+          status: 'Present',
+          sessionId: session.sessionId || session.id,
+          studentId: sid,
+          studentName: name
+        };
+        scans.unshift(record);
+        localStorage.setItem('studentScans', JSON.stringify(scans));
+
+        // Increment attendance on courseSessions entry
+        try {
+          const sessions = JSON.parse(localStorage.getItem('courseSessions') || '[]');
+          const idx = sessions.findIndex(x => (x.sessionId || x.id) === (session.sessionId || session.id));
+          if (idx !== -1) {
+            sessions[idx].attendanceCount = (sessions[idx].attendanceCount || 0) + 1;
+            localStorage.setItem('courseSessions', JSON.stringify(sessions));
+          }
+        } catch {}
+
+        statusEl.textContent = 'Attendance marked successfully!';
+        statusEl.classList.add('success');
+
+        // Optional redirect back to Student dashboard after short delay
+        setTimeout(() => { location.href = 'Student.html'; }, 1200);
+      };
+    </script>
+  </body>
+  </html>
+
+

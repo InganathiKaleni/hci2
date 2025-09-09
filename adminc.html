@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edutend - Module Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+    <header class="container">
+        <nav>
+            <div class="nav-left">
+                <strong>COURSES</strong>
+            </div>
+            <div class="nav-right">
+        <a href="#" class="toggle" id="menu-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" height="32px" width="42px" viewBox="0 -960 960 960" fill="#fff">
+                <g transform="scale(-1, 1) translate(-960, 0)">
+                    <path d="M180-390v-0h450v60H180Zm0-190v-40h600v60H180Z"/>
+                </g>
+            </svg>
+            <div class="profile">
+                <h1>IN</h1>
+            </div>
+        </a>
+
+                
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="hero-text">
+            <h1>Don't settle for ordinary.</h1>
+            <p>Easily manage your studies anywhere.</p>
+        </div>
+
+        <div class="card-grid">
+            <div class="card yellow">
+                <div>
+                    <h2>HUMAN COMPUTER INTERACTION II</h2>
+                    <p>HCI</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card blue">
+                <div>
+                    <h2>DEVELOPMENT SOFTWARE II</h2>
+                    <p>DES</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card dark-blue">
+                <div>
+                    <h2>TECNICAL PROGRAMMING I</h2>
+                    <p>TEP</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card purple">
+                <div>
+                    <h2>INFORMATION SYSTEMS II</h2>
+                    <p>INF</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card sage">
+                <div>
+                    <h2>SYSTEM SOFTWARE IA</h2>
+                    <p>SS1A</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card lavender">
+                <div>
+                    <h2>INFORMATION TECNOLOGY SKILLS I</h2>
+                    <p>ITS</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card sky ">
+                <div>
+                    <h2>DEVELOPMENT SOFTWARE I</h2>
+                    <p>DEV</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card grey">
+                <div>
+                    <h2>INFORMATION SYSTEMS I</h2>
+                    <p>INF</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card yellow">
+                <div>
+                    <h2>Systems Software 1B</h2>
+                    <p>SS1B</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card blue">
+                <div>
+                    <h2>Management information Systems I</h2>
+                    <p>MIS I</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card dark-blue">
+                <div>
+                    <h2>TECNICAL PROGRAMMING I</h2>
+                    <p>TEP</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card purple">
+                <div>
+                    <h2>INFORMATION SYSTEMS II</h2>
+                    <p>INF</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card sage">
+                <div>
+                    <h2>SYSTEM SOFTWARE I</h2>
+                    <p>SS</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card lavender">
+                <div>
+                    <h2>INFORMATION TECNOLOGY SKILLS I</h2>
+                    <p>ITS</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card sky ">
+                <div>
+                    <h2>DEVELOPMENT SOFTWARE I</h2>
+                    <p>DEV</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+            <div class="card grey">
+                <div>
+                    <h2>INFORMATION SYSTEMS I</h2>
+                    <p>INF</p>
+                </div>
+                <button class="launch-btn">View Module</button>
+            </div>
+        </div>
+
+<div id="overlay" class="overlay">
+    <div class="overlay-content">
+        <span class="close-btn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></span>
+        <h2 id="overlay-title"></h2>
+        <p id="overlay-code"></p>
+        <p id="overlay-description" ></p>
+    </div>
+</div>
+
+
+    </main>
+
+    <footer class="container">
+        <div class="footer-content">
+
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+
+<div class="sidebar" id="sidebar">
+  <button class="close-btn" id="closeSidebar" aria-label="Close Sidebar"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#e3e3e3"><path d="m251.33-204.67-46.66-46.66L433.33-480 204.67-708.67l46.66-46.66L480-526.67l228.67-228.66 46.66 46.66L526.67-480l228.66 228.67-46.66 46.66L480-433.33 251.33-204.67Z"/></svg></button>
+  
+  <ul>
+    <li><a href="#" >Profile</a></li>
+    <li><a href="#" >Settings</a></li>
+    <li><a href="#" >Main Menu</a></li>
+    
+  </ul>
+</div>
+
+
+  <script>
+const toggleButton = document.querySelector('.toggle');
+const sidebar = document.getElementById('sidebar');
+const closeButton = document.getElementById('closeSidebar');
+
+toggleButton.addEventListener('click', () => {
+  sidebar.classList.add('open');
+});
+
+closeButton.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+});
+
+  </script>
+
+
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+        // --- Card Overlay Logic ---
+        const cards = document.querySelectorAll('.card');
+        const cardOverlay = document.getElementById('overlay'); // Renamed to avoid confusion
+        const cardCloseBtn = document.querySelector('.close-btn');
+        const overlayTitle = document.getElementById('overlay-title');
+        const overlayCode = document.getElementById('overlay-code');
+        const overlayDescription = document.getElementById('overlay-description');
+
+        const descriptions = {
+            "HUMAN COMPUTER INTERACTION II": "This module focuses on designing intuitive interfaces and understanding user behavior.",
+            "DEVELOPMENT SOFTWARE II": "Covers advanced techniques in software development and agile methodologies.",
+            "INFORMATION SYSTEMS I": "Introduces low-level programming, data structures, and debugging strategies.",
+            "DEVELOPMENT SOFTWARE I": "Introduces low-level programming, data structures, and debugging strategies.",
+            "INFORMATION TECHNOLOGY SKILLS I": "information skills.",
+            "SYSTEM SOFTWARE I": "Introduces computers..",
+            "TECNICAL PROGRAMMING I": "Introduces low-level programming, data structures, and debugging strategies.",
+            "INFORMATION SYSTEMS II": "IS"
+        };
+
+        cards.forEach(card => {
+            card.addEventListener('click', function () {
+                const title = card.querySelector('h2').textContent.trim();
+                const code = card.querySelector('p').textContent.trim();
+                const description = descriptions[title] || "No description available.";
+
+                overlayTitle.textContent = title;
+                overlayCode.textContent = code;
+                overlayDescription.textContent = description;
+                cardOverlay.style.display = 'flex';
+            });
+        });
+
+        const closeCardOverlay = () => {
+            cardOverlay.style.display = 'none';
+        }
+
+        cardCloseBtn.addEventListener('click', closeCardOverlay);
+        cardOverlay.addEventListener('click', function (e) {
+            if (e.target === cardOverlay) {
+                closeCardOverlay();
+            }
+        });
+
+
+    });
+</script>
+
+<script src="index.js"></script>
+</body>
+</html>
