@@ -6,7 +6,91 @@
     <title>Edutend - Module Management</title>
     <link rel="stylesheet" href="index.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <!-- Firebase SDK (App + Firestore) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/modules/firebase.js"></script>
+    <script src="js/modules/qr-manager.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* QR Code Centering Styles */
+        #qr-display-area {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            text-align: center;
+        }
+        
+        #qrcode-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            min-height: 200px;
+        }
+        
+        #qrcodeCanvas {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #qrcodeCanvas canvas {
+            margin: 0 auto;
+            display: block;
+        }
+        
+        #qrcodeCanvas img {
+            margin: 0 auto;
+            display: block;
+        }
+        
+        #pin-display {
+            font-size: 28px;
+            font-weight: bold;
+            color: #dc3545;
+            margin-top: 10px;
+        }
+        
+        #timer-display {
+            font-size: 16px;
+            color: #6c757d;
+            margin-top: 10px;
+        }
+        
+        /* Overlay Resizing Styles */
+        .overlay-content {
+            transition: all 0.3s ease-in-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .overlay-content.compact {
+            width: 45%;
+            max-width: 500px;
+        }
+        
+        .overlay-content.expanded {
+            width: 60%;
+            max-width: 700px;
+        }
+        
+        .overlay-content.full {
+            width: 80%;
+            max-width: 900px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .overlay-content {
+                width: 95% !important;
+                max-width: 95% !important;
+                margin: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -16,18 +100,8 @@
           <strong>EDUTEND</strong>
         </div>
         <div class="nav-right">
-          <a href="#" class="toggle" id="menu-toggle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="32px"
-              width="42px"
-              viewBox="0 -960 960 960"
-              fill="#fff"
-            >
-              <g transform="scale(-1, 1) translate(-960, 0)">
-                <path d="M180-390v-0h450v60H180Zm0-190v-40h600v60H180Z" />
-              </g>
-            </svg>
+          <a href="Lecturer.html" class="toggle" id="menu-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
             <div class="profile">
               <h1>IN</h1>
             </div>
@@ -148,17 +222,19 @@
           <p id="selected-course-code">Course Code</p>
         </div>
         
-        <button class="btn" id="generate-qr-btn" onclick="generateNewSession()">Generate PIN & QR Code</button>
+        <button class="btn" id="generate-qr-btn">Generate PIN & QR Code</button>
         <div>
           <p>Override default 15 min timer:</p>
-          <button class="btn" onclick="setTimer(5)">5 min</button>
-          <button class="btn" onclick="setTimer(10)">10 min</button>
-          <button class="btn" onclick="setTimer(15)">15 min</button>
+          <button class="btn" data-timer="5">5 min</button>
+          <button class="btn" data-timer="10">10 min</button>
+          <button class="btn" data-timer="15">15 min</button>
         </div>
-        <div id="qr-display-area">
-          <div id="qrcode"></div>
+        <div id="qr-display-area" class="qr-display-area">
+          <div id="qrcode-container">
+            <div id="qrcodeCanvas"></div>
+          </div>
           <p id="pin-display"></p>
-          <p id="timer-display"></p>
+          <p id="timer-display" class="timer-display"></p>
           <div class="session-info" id="session-info">
             <p><strong>Course:</strong> <span id="session-course-name">-</span></p>
             <p><strong>Code:</strong> <span id="session-course-code">-</span></p>
@@ -229,6 +305,16 @@
  <script type="module" src="/sub.js"></script>
 
 <script>
+// QR Manager instance
+let qrManager = null;
+
+// Initialize QR Manager when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof QRManager !== 'undefined') {
+        qrManager = new QRManager();
+    }
+});
+
 // Function to navigate to live session in Lecturer.html
 function navigateToLiveSession(courseCode) {
     // Store the selected course for Lecturer.html to use
@@ -262,8 +348,16 @@ function openCreateClassOverlay(courseCode, courseName) {
     if (pinDisplay) pinDisplay.textContent = '';
     if (timerDisplay) timerDisplay.textContent = '';
     
+    // Set the selected course in QRManager if available
+    if (qrManager) {
+        qrManager.selectedCourse = { code: courseCode, name: courseName };
+    }
+    
     // Open the QR overlay
     document.getElementById('qr-overlay').style.display = 'flex';
+    
+    // Resize overlay after opening
+    setTimeout(resizeOverlay, 100);
 }
 
 // Function to open Details overlay
@@ -469,6 +563,72 @@ function setTimer(minutes) {
 
 function closeOverlay(overlayId) {
     document.getElementById(overlayId).style.display = 'none';
+    
+    // Reset overlay size when closing
+    if (overlayId === 'qr-overlay') {
+        const overlayContent = document.querySelector('.overlay-content');
+        if (overlayContent) {
+            overlayContent.classList.remove('compact', 'expanded', 'full');
+            overlayContent.classList.add('compact');
+        }
+    }
+}
+
+// Function to resize overlay based on content
+function resizeOverlay() {
+    const overlayContent = document.querySelector('.overlay-content');
+    const qrDisplayArea = document.getElementById('qr-display-area');
+    
+    if (!overlayContent) return;
+    
+    // Remove existing size classes
+    overlayContent.classList.remove('compact', 'expanded', 'full');
+    
+    // Check if QR code is displayed
+    if (qrDisplayArea && qrDisplayArea.style.display !== 'none') {
+        // QR code is visible, expand the overlay
+        overlayContent.classList.add('expanded');
+    } else {
+        // No QR code, use compact size
+        overlayContent.classList.add('compact');
+    }
+}
+
+// Function to set up QR Manager event listeners
+function setupQREventListeners() {
+    // Generate QR button
+    const generateQrBtn = document.getElementById('generate-qr-btn');
+    if (generateQrBtn) {
+        generateQrBtn.addEventListener('click', () => {
+            if (qrManager) {
+                qrManager.generateNewSession();
+                // Resize overlay after QR generation
+                setTimeout(resizeOverlay, 100);
+            }
+        });
+    }
+    
+    // Timer buttons
+    document.querySelectorAll('[data-timer]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const minutes = parseInt(e.target.getAttribute('data-timer'));
+            if (qrManager) {
+                qrManager.setTimer(minutes);
+            }
+        });
+    });
+    
+    // Close session button
+    const closeSessionBtn = document.getElementById('close-session-btn');
+    if (closeSessionBtn) {
+        closeSessionBtn.addEventListener('click', () => {
+            if (qrManager) {
+                qrManager.closeCurrentSession();
+                // Resize overlay after closing session
+                setTimeout(resizeOverlay, 100);
+            }
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -479,6 +639,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Set up QR Manager event listeners
+    setupQREventListeners();
     
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
